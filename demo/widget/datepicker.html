@@ -1,0 +1,106 @@
+<div class="page">
+	<h2 class="contentTitle">日历控件</h2>
+	<div class="pageContent">
+		<form method="post" action="result/navtab-refresh.json" class="pageForm required-validate"
+			onsubmit="return validateCallback(this, navTabAjaxDone);">
+			<div class="pageFormContent tree-l-box" style="width: 40%" layoutH="87">
+				<div class="unit">
+					<label>默认格式：</label> <input type="text" name="date1" class="date" readonly="true" /> <a class="inputDateButton"
+						href="javascript:;">选择</a> <span class="unit">yyyy-MM-dd</span>
+				</div>
+				<div class="unit">
+					<label>自定义日期格式：</label> <input type="text" name="date10" class="date" dateFmt="yyyy-MM-dd HH:mm:ss" readonly="true" />
+					<a class="inputDateButton" href="javascript:;">选择</a> <span class="unit">yyyy-MM-dd HH:mm:ss</span>
+				</div>
+				<div class="unit">
+					<label>自定义日期格式：</label> <input type="text" name="date11" class="date" dateFmt="yyyy-MM-dd HH:mm" readonly="true" />
+					<a class="inputDateButton" href="javascript:;">选择</a> <span class="unit">yyyy-MM-dd HH:mm</span>
+				</div>
+				<div class="unit">
+					<label>自定义日期格式：</label> <input type="text" name="date12" class="date" dateFmt="yyyy-MM-dd HH:ss" readonly="true" />
+					<a class="inputDateButton" href="javascript:;">选择</a> <span class="unit">yyyy-MM-dd HH:ss</span>
+				</div>
+
+				<div class="unit">
+					<label>自定义日期格式：</label> <input type="text" name="date13" class="date" dateFmt="y年M月d日 H点" readonly="true" /> <a
+						class="inputDateButton" href="javascript:;">选择</a> <span class="unit">y年M月d日 H点</span>
+				</div>
+				<div class="unit">
+					<label>自定义日期格式：</label> <input type="text" name="date14" class="date" dateFmt="EEE HH:mm:ss" readonly="true" /> <a
+						class="inputDateButton" href="javascript:;">选择</a> <span class="unit">EEE HH:mm:ss</span>
+				</div>
+				<div class="unit">
+					<label>自定义只有时间：</label> <input type="text" name="date15" class="date" dateFmt="HH:mm:ss" readonly="true" /> <a
+						class="inputDateButton" href="javascript:;">选择</a> <span class="unit">HH:mm:ss</span>
+				</div>
+				<div class="unit">
+					<label>自定义时间：</label> <input type="text" name="date16" class="date" dateFmt="HH:mm" mmStep="15" readonly="true" />
+					<a class="inputDateButton" href="javascript:;">选择</a> <span class="unit">HH:mm</span>
+				</div>
+			</div>
+			<div class="pageFormContent tree-l-box" style="width: 40%" layoutH="87">
+				<div class="unit">
+					<label>日期范围限制：</label> <input type="text" name="date2" value="2015-11-11" class="date" minDate="2014-11-11"
+						maxDate="2016-11-11" readonly="true" /> <a class="inputDateButton" href="javascript:;">选择</a><span class="unit">2014-11-11
+						至 2016-11-11</span>
+				</div>
+				<div class="unit">
+					<label>日期范围限制：</label> <input type="text" name="date3" class="date" dateFmt="yyyy/MM/dd" minDate="2014-11"
+						maxDate="2016-11" readonly="true" /> <a class="inputDateButton" href="javascript:;">选择</a> <span class="unit">2014-11
+						至 2016-11</span>
+				</div>
+				<div class="unit">
+					<label>日期范围限制：</label> <input type="text" name="date4" class="date" dateFmt="dd/MM/yyyy" minDate="2014"
+						maxDate="2016" readonly="true" /> <a class="inputDateButton" href="javascript:;">选择</a> <span class="unit">2014
+						至 2016</span>
+				</div>
+				<p></p>
+				<div class="unit">
+					<pre>
+定义日期范围属性minDate,maxDate支持以下几种写法:
+
+minDate="2000-01-15" maxDate="2012-12-15"
+
+minDate="2000-01" maxDate="2012-12"
+
+minDate="2000" maxDate="2012"
+					</pre>
+				</div>
+				<div class="divider"></div>
+				<div class="unit">
+					<label>动态范围限制：</label> <input type="text" name="date5" class="date" dateFmt="dd/MM/yy" minDate="{%y-10}-%M-%d"
+						maxDate="{%y}-%M-{%d+1}" /> <a class="inputDateButton" href="javascript:;">选择</a> <span class="unit">当前年份-10，当前日期+1</span>
+				</div>
+				<p></p>
+				<div class="unit">
+					<pre>
+定义日期范围属性minDate,maxDate支持以下几种写法:
+
+minDate="{%y-10}-%M-%d" maxDate="{%y}-%M-{%d+1}"
+
+minDate="{%y-10}-%M" maxDate="{%y+10}-%M"
+
+minDate="{%y-10}" maxDate="{%y+10}"
+					</pre>
+				</div>
+			</div>
+			<div class="formBar">
+				<ul>
+					<li><div class="buttonActive">
+							<div class="buttonContent">
+								<button type="submit">提交</button>
+							</div>
+						</div></li>
+					<li>
+						<div class="button">
+							<div class="buttonContent">
+								<button type="button" class="close">取消</button>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</form>
+	</div>
+</div>
+

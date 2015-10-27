@@ -1,0 +1,143 @@
+<div class="page">
+	<div class="pageContent">
+		<h2 class="contentTitle">查找带回</h2>
+		<form action="demo/common/ajaxDone.html?navTabId=masterList&callbackType=closeCurrent" method="post"
+			class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+			<div class="pageFormContent" layoutH="87">
+				<dl class="nowrap">
+					<dt>部门名称：</dt>
+					<dd>
+						<input name="org1.id" value="" type="hidden" /> <input class="required" name="org1.orgName" type="text" /> <a
+							class="btn fa-search-plus" href="data/lookup-select.html" lookupGroup="org1">查找带回</a> <span class="unit">（填充隐藏域+文本框）</span>
+					</dd>
+				</dl>
+
+				<div class="divider"></div>
+				<dl class="nowrap">
+					<dt>部门名称：</dt>
+					<dd>
+						<input name="org2.id" value="" type="hidden" /> <input class="required" name="org2.orgName" type="text"
+							postField="orgName" suggestFields="orgNum,orgName" suggestUrl="data/suggest-data.html" lookupGroup="org2" /> <a
+							class="btn fa-search-plus" href="data/lookup-select.html" lookupGroup="org2">查找带回</a> <span class="unit">（建议输入+填充隐藏域+多个文本框）</span>
+					</dd>
+				</dl>
+				<dl class="nowrap">
+					<dt>部门编号：</dt>
+					<dd>
+						<input class="readonly" name="org2.orgNum" readonly="readonly" type="text" />
+					</dd>
+				</dl>
+
+				<div class="divider"></div>
+				<dl class="nowrap">
+					<dt>城市：</dt>
+					<dd>
+						<input class="required" name="district.cityName" type="text" readonly /><span class="unit">（树形选择+填充隐藏域+多个文本框）</span>
+					</dd>
+				</dl>
+				<dl class="nowrap">
+					<dt>区县：</dt>
+					<dd>
+						<input name="district.id" value="" type="hidden" /> <input class="required" name="district.districtName"
+							type="text" readonly /> <a class="btn fa-search-plus" href="data/lookup-tree-select.html" lookupGroup="district">查找带回</a>
+					</dd>
+				</dl>
+
+				<div class="divider"></div>
+				<dl class="nowrap">
+					<dt>部门名称A：</dt>
+					<dd>
+						<input id="inputOrga" name="orga.id" value="" type="hidden" /> <input class="required" name="orga.orgName"
+							type="text" /> <a class="btn fa-search-plus" href="data/lookup-select.html" lookupGroup="orga">查找带回</a> <span class="unit">（联动限制，必须先选部门A才可以选部门B）</span>
+					</dd>
+				</dl>
+				<dl class="nowrap">
+					<dt>部门编号A：</dt>
+					<dd>
+						<input class="readonly" name="orga.orgNum" readonly="readonly" type="text" />
+					</dd>
+				</dl>
+				<dl class="nowrap">
+					<dt>部门名称B：</dt>
+					<dd>
+						<input name="orgb.id" value="" type="hidden" /> <input class="required" name="orgb.orgName" type="text" /> <a
+							class="btn fa-search-plus" href="data/lookup-select.html?orgId={inputOrga}" warn="请先选择部门A" lookupGroup="orgb">查找带回</a> <span
+							class="unit">（href中带有{inputOrga}参数表示有关联限定，其中inputOrga为关联限定控件的id）</span>
+					</dd>
+				</dl>
+
+				<div class="divider"></div>
+				<dl class="nowrap">
+					<dt>部门名称：</dt>
+					<dd>
+						<input name="org3.id" value="" type="hidden"> <input name="org3.orgName" type="text" /> <a
+							class="btn fa-search-plus" href="data/lookup-select-multi.html" lookupGroup="org3">查找带回</a> <span class="unit">（通过复选框选择多个值查找回带）</span>
+					</dd>
+				</dl>
+				<dl class="nowrap">
+					<dt>部门编号：</dt>
+					<dd>
+						<input class="readonly" name="org3.orgNum" readonly="readonly" type="text" />
+					</dd>
+				</dl>
+
+				<div class="divider"></div>
+				<dl class="nowrap">
+					<dt>部门名称：</dt>
+					<dd>
+						<input name="org.id[]" value="1" type="hidden" /> <input class="required" name="org.orgName[]" value="技术部"
+							type="text" lookupGroup="org" suffix="[]" /> <a class="btn fa-search-plus" href="data/lookup-select.html" lookupGroup="org"
+							suffix="[]">查找带回</a> <span class="unit">（设置suffix="[]"指定下标，用于主从结构子表）</span>
+					</dd>
+				</dl>
+
+				<div class="divider"></div>
+				<dl class="nowrap">
+					<dt>部门名称：</dt>
+					<dd>
+						<input name="org[].id" value="1" type="hidden" /> <input class="required" name="org[].orgName" value="技术部"
+							type="text" lookupGroup="org[]" /> <a class="btn fa-search-plus" href="data/lookup-select.html" lookupGroup="org[]">查找带回</a>
+						<span class="unit">（不需要suffix="[]"属性，设置lookupGroup属性中加上方括号[]指定下标，用于主从结构子表）</span>
+					</dd>
+				</dl>
+
+				<div class="divider"></div>
+				<dl class="nowrap">
+					<dt>部门名称：</dt>
+					<dd>
+						<input name="obj.orgNum" value="" type="hidden" /> <input class="required" name="obj.orgName" type="text"
+							lookupGroup="obj" lookupPk="orgNum" /> <a class="btn fa-search-plus" href="data/lookup-select.html" lookupGroup="obj"
+							lookupPk="orgNum">查找带回</a> <span class="unit">（设置lookupPk="xxx"属性自定义主键，用来替代默认主键名id）</span>
+					</dd>
+				</dl>
+
+				<div class="divider"></div>
+
+				<dl class="nowrap">
+					<dt>上传附件：</dt>
+					<dd>
+						<input name="attachment.id" value="" type="hidden"> <input class="readonly" name="attachment.fileName"
+							value="" readonly="readonly" type="text" /> <a class="btn fa-cloud-upload" href="data/lookup-upload.html"
+							lookupGroup="attachment" width="SS" height="SSS" title="附件">附件</a> <span class="unit">（上传附件带回文件信息）</span>
+					</dd>
+				</dl>
+
+				<div class="divider"></div>
+			</div>
+			<div class="formBar">
+				<ul>
+					<li><div class="buttonActive">
+							<div class="buttonContent">
+								<button type="submit">保存</button>
+							</div>
+						</div></li>
+					<li><div class="button">
+							<div class="buttonContent">
+								<button class="close" type="button">关闭</button>
+							</div>
+						</div></li>
+				</ul>
+			</div>
+		</form>
+	</div>
+</div>

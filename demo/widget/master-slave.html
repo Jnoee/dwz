@@ -1,0 +1,83 @@
+<div class="page">
+	<div class="pageContent">
+		<h2 class="contentTitle">主从结构</h2>
+		<form action="demo/common/ajaxDone.html?navTabId=masterList&callbackType=closeCurrent" method="post"
+			class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone)">
+			<div class="pageFormContent" layoutH="86">
+				<div class="tabs">
+					<div class="tabsHeader">
+						<div class="tabsHeaderContent">
+							<ul>
+								<li><a href="javascript:void(0)"><span>从表带下标[#index#]示例</span></a></li>
+								<li><a href="javascript:void(0)"><span>从表带下标[]示例</span></a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="tabsContent" layoutH="130">
+						<div>
+							<table class="list nowrap masterSlave" width="100%">
+								<thead>
+									<tr>
+										<th type="span" align="center" defaultVal="#index#" hiddenName="items[#index#].itemHidden">序号</th>
+										<th type="text" name="items[#index#].itemString" size="12" fieldClass="required"
+											fieldAttrs="{remote:'validate_remote.html', maxlength:10}">从字符串</th>
+										<th type="text" name="items[#index#].itemInt" defaultVal="#index#" size="12" fieldClass="digits">从整数</th>
+										<th type="text" name="items[#index#].itemFloat" defaultVal="0.8" size="12" fieldClass="number">从浮点</th>
+										<th type="date" name="items[#index#].itemDate" defaultVal="2011-12-28" size="12">从日期</th>
+										<th type="date" dateFmt="yyyy-MM-dd HH:mm" name="items[#index#].itemDataTime" size="16">从日期时间</th>
+										<th type="lookup" name="items[#index#].org.orgName" lookupGroup="items[#index#].org"
+											lookupUrl="data/lookup-select.html" suggestUrl="data/suggest-data.html" suggestFields="orgName"
+											postField="keywords" size="12" fieldClass="required">部门名称</th>
+										<th type="enum" name="items[#index#].itemEnum" enumUrl="data/master-slave-enum.html" size="12">从枚举</th>
+										<th type="attach" name="items[#index#].attachment.fileName" lookupGroup="items[#index#].attachment"
+											lookupUrl="data/lookup-upload.html" size="12">从附件</th>
+										<th type="del" width="60" align="center">操作</th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
+						</div>
+						<div>
+							<table class="list nowrap masterSlave" width="100%">
+								<thead>
+									<tr>
+										<th type="span" align="center" defaultVal="#index#" hiddenName="items[].itemHidden">序号</th>
+										<th type="text" name="items[].itemString" size="12" fieldClass="required">从字符串</th>
+										<th type="text" name="items[].itemInt" size="12" fieldClass="digits">从整数</th>
+										<th type="text" name="items[].itemFloat" size="12" fieldClass="number">从浮点</th>
+										<th type="date" name="items[].itemDate" size="12">从日期</th>
+										<th type="date" dateFmt="yyyy-MM-dd HH:mm" name="items[].itemDataTime" size="16">从日期时间</th>
+										<th type="lookup" name="items[].org.orgName" lookupGroup="items[].org" lookupUrl="data/lookup-select.html"
+											suggestUrl="data/suggest-data.html" suggestFields="orgName" size="12">部门名称</th>
+										<th type="enum" name="items[].itemEnum" enumUrl="data/master-slave-enum.html" size="12">从枚举</th>
+										<th type="attach" name="items[].attachment.fileName" lookupGroup="items[].attachment"
+											lookupUrl="data/lookup-upload.html" size="12">从附件</th>
+										<th type="del" width="60" align="center">操作</th>
+									</tr>
+								</thead>
+								<tbody></tbody>
+							</table>
+						</div>
+					</div>
+					<div class="tabsFooter">
+						<div class="tabsFooterContent"></div>
+					</div>
+				</div>
+			</div>
+			<div class="formBar">
+				<ul>
+					<li><div class="buttonActive">
+							<div class="buttonContent">
+								<button type="submit">保存</button>
+							</div>
+						</div></li>
+					<li><div class="button">
+							<div class="buttonContent">
+								<button class="close" type="button">关闭</button>
+							</div>
+						</div></li>
+				</ul>
+			</div>
+		</form>
+	</div>
+</div>
