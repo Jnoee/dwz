@@ -167,7 +167,7 @@
 						});
 						break;
 					case 'date':
-						html = '<input type="text" name="' + field.name + '" value="' + field.defaultVal + '" class="date ' + field.fieldClass + '" dateFmt="' + field.patternDate + '" size="' + field.size + '"/>' + '<a class="inputDateButton" href="javascript:void(0)">选择</a>';
+						html = '<input type="text" name="' + field.name + '" value="' + field.defaultVal + '" class="date ' + field.fieldClass + '" dateFmt="' + field.patternDate + '" size="' + field.size + '"/>' + '<a class="btn fa-calendar" href="javascript:void(0)">选择</a>';
 						break;
 					// 增加checkbox支持
 					case 'checkbox':

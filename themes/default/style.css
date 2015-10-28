@@ -369,7 +369,7 @@ input.disabled, textarea.disabled {
 	background-color: #F6F6F6;
 }
 
-.inputButton, .inputDateButton {
+.inputButton {
 	background: url(./images/form/input_bt.png) no-repeat;
 }
 

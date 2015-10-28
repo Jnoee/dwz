@@ -27,7 +27,7 @@
 			tmUp$: "#calendar .time .up",
 			tmDown$: "#calendar .time .down",
 			close$: "#calendar .close",
-			calIcon$: "a.inputDateButton",
+			calIcon$: "a.btn.fa-calendar",
 			main$: "#calendar .main",
 			days$: "#calendar .days",
 			dayNames$: "#calendar .dayNames",
