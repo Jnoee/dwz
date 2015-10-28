@@ -4,7 +4,7 @@
  */
 (function($) {
 	if($.validator) {
-		$.validator.match = function(value, pattern, attrs) {
+		var match = function(value, pattern, attrs) {
 			if(value) {
 				if(pattern instanceof RegExp) {
 					return pattern.test(value);
@@ -17,7 +17,7 @@
 			return true;
 		}
 
-		$.validator.getTarget = function(element, param) {
+		var getTarget = function(element, param) {
 			var form = $(element).closest("form");
 			var target = form.find("[name=" + param + "]");
 			if(target.length == 0) {
@@ -27,19 +27,19 @@
 		};
 
 		$.validator.addMethod("alphanumeric", function(value, element) {
-			return this.optional(element) || this.match(value, /^\w+$/i);
+			return this.optional(element) || match(value, /^\w+$/i);
 		}, "请输入字母、数字、下划线。");
 
 		$.validator.addMethod("lettersonly", function(value, element) {
-			return this.optional(element) || this.match(value, /^[a-z]+$/i);
+			return this.optional(element) || match(value, /^[a-z]+$/i);
 		}, "请输入字母。");
 
 		$.validator.addMethod("phone", function(value, element) {
-			return this.optional(element) || this.match(value, /^[0-9 \(\)]{7,30}$/);
+			return this.optional(element) || match(value, /^[0-9 \(\)]{7,30}$/);
 		}, "请输入正确格式的电话号码。");
 
 		$.validator.addMethod("postcode", function(value, element) {
-			return this.optional(element) || this.match(value, /^[0-9 A-Za-z]{5,20}$/);
+			return this.optional(element) || match(value, /^[0-9 A-Za-z]{5,20}$/);
 		}, "请输入正确格式的邮政编码。");
 
 		$.validator.addMethod("date", function(value, element) {
@@ -57,20 +57,20 @@
 		}, "请输入正确格式的时间。");
 
 		$.validator.addMethod("price", function(value, element) {
-			return this.optional(element) || this.match(value, /^\d+[\.]?\d{0,2}$/);
+			return this.optional(element) || match(value, /^\d+[\.]?\d{0,2}$/);
 		}, "请输入正确格式的价格。");
 
 		$.validator.addMethod("params", function(value, element) {
-			return this.optional(element) || this.match(value, /^\s*[^\s=]+[ ]*=[ ]*[^\s=]+\s*$|^\s*[^\s=]+[ ]*=[ ]*[^\s=]+\s*\n+(\s*[^\s=]+[ ]*=[ ]*[^\s=]+\s*\n)*(\s*[^\s=]+[ ]*=[ ]*[^\s=]+\s*)$/g);
+			return this.optional(element) || match(value, /^\s*[^\s=]+[ ]*=[ ]*[^\s=]+\s*$|^\s*[^\s=]+[ ]*=[ ]*[^\s=]+\s*\n+(\s*[^\s=]+[ ]*=[ ]*[^\s=]+\s*\n)*(\s*[^\s=]+[ ]*=[ ]*[^\s=]+\s*)$/g);
 		}, "请输入正确格式的参数。");
 
 		$.validator.addMethod("eqTo", function(value, element, param) {
-			var target = this.getTarget(element, param);
+			var target = getTarget(element, param);
 			return value === target.val();
 		}, "请再次输入相同的值。");
 
 		$.validator.addMethod("gtTo", function(value, element, param) {
-			var target = this.getTarget(element, param);
+			var target = getTarget(element, param);
 			if(value && target.val()) {
 				return parseFloat(value) > parseFloat(target.val());
 			}
@@ -78,7 +78,7 @@
 		}, "截止值必须大于起始值。");
 
 		$.validator.addMethod("geTo", function(value, element, param) {
-			var target = this.getTarget(element, param);
+			var target = getTarget(element, param);
 			if(value && target.val()) {
 				return parseFloat(value) >= parseFloat(target.val());
 			}
@@ -87,7 +87,7 @@
 
 		$.validator.addMethod("gtToDate", function(value, element, param) {
 			var endDate = $(element);
-			var startDate = this.getTarget(element, param);
+			var startDate = getTarget(element, param);
 			var endDatePattern = endDate.attr("dateFmt") || "yyyy-MM-dd";
 			var startDatePattern = startDate.attr("dateFmt") || "yyyy-MM-dd";
 
@@ -99,7 +99,7 @@
 
 		$.validator.addMethod("geToDate", function(value, element, param) {
 			var endDate = $(element);
-			var startDate = this.getTarget(element, param);
+			var startDate = getTarget(element, param);
 			var endDatePattern = endDate.attr("dateFmt") || "yyyy-MM-dd";
 			var startDatePattern = startDate.attr("dateFmt") || "yyyy-MM-dd";
 
@@ -111,7 +111,7 @@
 
 		$.validator.addMethod("gtToTime", function(value, element, param) {
 			var endTime = $(element);
-			var startTime = this.getTarget(element, param);
+			var startTime = getTarget(element, param);
 			var endTimePattern = endTime.attr("timeFmt") || "HH:mm";
 			var startTimePattern = startTime.attr("timeFmt") || "HH:mm";
 
@@ -123,7 +123,7 @@
 
 		$.validator.addMethod("geToTime", function(value, element, param) {
 			var endTime = $(element);
-			var startTime = this.getTarget(element, param);
+			var startTime = getTarget(element, param);
 			var endTimePattern = endTime.attr("timeFmt") || "HH:mm";
 			var startTimePattern = startTime.attr("timeFmt") || "HH:mm";
 
@@ -159,15 +159,6 @@
 			},
 			postcode: {
 				postcode: true
-			},
-			time: {
-				time: true
-			},
-			price: {
-				price: true
-			},
-			params: {
-				params: true
 			}
 		});
 		$.validator.setDefaults({
@@ -216,5 +207,4 @@
 			this.toShow = this.toShow.add(label);
 		}
 	}
-
 })(jQuery);

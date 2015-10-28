@@ -18,5 +18,13 @@ DWZ适合用来做后台管理系统的UI框架，组件基本够用。
 DWZ有一份文档，不过内容相当不全，建议直接看页面代码和js代码。
 
 #如何开始
-可以直接用firefox打开index.html，其它浏览器默认不允许通过ajax读取本地文件，所以打开会报错。
-如果你想用chrome打开，需要在启动chrome时增加  --allow-file-access-from-files 参数。	
+1. firefox
+因为需要从本地加载awesome字体，并且字体目录在css文件下子目录中，加载字体会失败，导致看不到按钮图标。
+该问题已有人提交了bug，不知何时可以修复，目前可以通过修改firefox的安全策略来解决：
+在地址栏输入 about:config 并找到 security.fileuri.strict_origin_policy 设置为 false。
+设置好以后直接打开 demo/index.html 即可查看示例。
+
+2. chrome
+chrome浏览器默认不允许通过ajax读取本地文件，需要在启动chrome时增加  --allow-file-access-from-files 参数。
+可以修改chrome启动的快捷方式文件加上该参数。
+设置好以后直接打开 demo/index.html 即可查看示例。
