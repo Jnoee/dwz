@@ -277,7 +277,7 @@ function initUI(_box) {
 			var $this = $(this);
 			var rel = $this.attr("rel");
 			if(rel) {
-				var $rel = $("#" + rel, $this.getPageDiv());
+				var $rel = $("#" + rel, $this.unitBox());
 				$rel.loadUrl($this.attr("href"), {}, function() {
 					$rel.find("[layoutH]").layoutH();
 				});

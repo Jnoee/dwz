@@ -1,68 +1,72 @@
-<div class="page">
-	<div class="pageContent">
-		<h2 class="contentTitle">页框</h2>
-		<div class="pageFormContent" layoutH="50">
-			<div class="tabs" currentIndex="1" eventType="click">
-				<div class="tabsHeader">
-					<div class="tabsHeaderContent">
-						<ul>
-							<li><a href="javascript:;"><span>内容同页</span></a></li>
-							<li><a href="javascript:;"><span>默认选中</span></a></li>
-							<li><a href="home.html" class="j-ajax"><span>加载页面</span></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="tabsContent" style="height: 150px;">
-					<div>此页签的内容就写在本页。</div>
-					<div>通过 <code>currentIndex="1"</code> 属性指定默认选中哪个页签，下标从0开始。</div>
-					<div></div>
-				</div>
-				<div class="tabsFooter">
-					<div class="tabsFooterContent"></div>
+<div class="pageContent">
+	<h2 class="contentTitle">页框</h2>
+	<div class="pageFormContent" layoutH="50">
+		<div class="tabs" currentIndex="1" eventType="click">
+			<div class="tabsHeader">
+				<div class="tabsHeaderContent">
+					<ul>
+						<li><a href="javascript:;"><span>内容同页</span></a></li>
+						<li><a href="javascript:;"><span>默认选中</span></a></li>
+						<li><a href="home.html" class="j-ajax"><span>加载页面</span></a></li>
+					</ul>
 				</div>
 			</div>
-			
-			<br />
-			
-			<div class="tabs" currentIndex="0" eventType="hover">
-				<div class="tabsHeader">
-					<div class="tabsHeaderContent">
-						<ul>
-							<li><a href="javascript:;"><span>内置表单</span></a></li>
-							<li><a href="javascript:;"><span>内置页框</span></a></li>
-						</ul>
-					</div>
+			<div class="tabsContent" style="height: 150px;">
+				<div>此页签的内容就写在本页。</div>
+				<div>
+					通过
+					<code>currentIndex="1"</code>
+					属性指定默认选中哪个页签，下标从0开始。
 				</div>
-				<div class="tabsContent" style="height: 200px;">
-					<div>
-						<dl>
-							<dt>客户名称：</dt>
-							<dd><input name="name" class="required" type="hover" size="30" value="" alt="请输入客户名称" /></dd>
-						</dl>
-					</div>
-					<div>
-						<div class="tabs" currentIndex="0" eventType="hover" style="width: 300px">
-							<div class="tabsHeader">
-								<div class="tabsHeaderContent">
-									<ul>
-										<li><a href="javascript:;"><span>内置页签-1</span></a></li>
-										<li><a href="javascript:;"><span>内置页签-2</span></a></li>
-									</ul>
-								</div>
+				<div></div>
+			</div>
+			<div class="tabsFooter">
+				<div class="tabsFooterContent"></div>
+			</div>
+		</div>
+
+		<br />
+
+		<div class="tabs" currentIndex="0" eventType="hover">
+			<div class="tabsHeader">
+				<div class="tabsHeaderContent">
+					<ul>
+						<li><a href="javascript:;"><span>内置表单</span></a></li>
+						<li><a href="javascript:;"><span>内置页框</span></a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="tabsContent" style="height: 200px;">
+				<div>
+					<dl>
+						<dt>客户名称：</dt>
+						<dd>
+							<input name="name" class="required" type="hover" size="30" value="" alt="请输入客户名称" />
+						</dd>
+					</dl>
+				</div>
+				<div>
+					<div class="tabs" currentIndex="0" eventType="hover" style="width: 300px">
+						<div class="tabsHeader">
+							<div class="tabsHeaderContent">
+								<ul>
+									<li><a href="javascript:;"><span>内置页签-1</span></a></li>
+									<li><a href="javascript:;"><span>内置页签-2</span></a></li>
+								</ul>
 							</div>
-							<div class="tabsContent" style="height: 150px;">
-								<div>内容1</div>
-								<div>内容2</div>
-							</div>
-							<div class="tabsFooter">
-								<div class="tabsFooterContent"></div>
-							</div>
+						</div>
+						<div class="tabsContent" style="height: 150px;">
+							<div>内容1</div>
+							<div>内容2</div>
+						</div>
+						<div class="tabsFooter">
+							<div class="tabsFooterContent"></div>
 						</div>
 					</div>
 				</div>
-				<div class="tabsFooter">
-					<div class="tabsFooterContent"></div>
-				</div>
+			</div>
+			<div class="tabsFooter">
+				<div class="tabsFooterContent"></div>
 			</div>
 		</div>
 	</div>

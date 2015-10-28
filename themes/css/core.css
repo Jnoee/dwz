@@ -1674,19 +1674,6 @@ select {
 	border-color: #A2BAC0 #B8D0D6 #B8D0D6 #A2BAC0
 }
 
-.inputButton {
-	float: left;
-	display: block;
-	overflow: hidden;
-	text-indent: -1000px;
-	width: 16px;
-	height: 21px;
-}
-
-.inputButton:hover {
-	background-position: 0 -50px;
-}
-
 span.error {
 	float: left;
 	cursor: help;

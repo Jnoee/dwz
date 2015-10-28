@@ -1,13 +1,11 @@
-<div class="page">
-	<div class="pageContent">
-		<h2 class="contentTitle">编辑器</h2>
+<div class="pageContent">
+	<h2 class="contentTitle">编辑器</h2>
+	<form method="post" action="result/navtab-refresh.html" class="pageForm required-validate"
+		onsubmit="return iframeCallback(this)">
 		<div class="pageFormContent" layoutH="87">
-			<form method="post" action="result/navtab-refresh.html" class="pageForm required-validate"
-				onsubmit="return iframeCallback(this)">
-					<div class="unit">
-						<textarea class="editor" name="description" rows="15" cols="120" upLinkUrl="upload.php" upLinkExt="zip,rar,txt"
-							upImgUrl="upload.php" upImgExt="jpg,jpeg,gif,png" upFlashUrl="upload.php" upFlashExt="swf"
-							upMediaUrl="upload.php"upMediaExt:"avi">
+			<div class="unit">
+				<textarea class="editor" name="description" rows="15" cols="120" upLinkUrl="upload.php" upLinkExt="zip,rar,txt"
+					upImgUrl="upload.php" upImgExt="jpg,jpeg,gif,png" upFlashUrl="upload.php" upFlashExt="swf" upMediaUrl="upload.php"upMediaExt:"avi">
 <strong>xheditor + 文件上传</strong><br />
 upLinkUrl:超链接上传接口地址<br />
 upLinkExt:超链接本地上传扩展限制 【可选】【默认值： zip,rar,txt】<br />
@@ -17,45 +15,42 @@ upFlashUrl:动画上传接口地址<br />
 upFlashExt:动画本地上传扩展限制 【可选】【默认值： swf】<br />
 upMediaUrl:视频上传接口地址<br />
 upMediaExt:视频本地上传扩展限制 【可选】【默认值： avi】
-
 							</textarea>
-					</div>
-					<div class="unit">
-						<textarea class="editor" name="description" rows="15" cols="120">full(完全) 默认方式</textarea>
-					</div>
-					<div class="unit">
-						<textarea class="editor" name="description" rows="15" cols="120" tools="mfull">mfull(多行完全)</textarea>
-					</div>
-					<div class="unit">
-						<textarea class="editor" name="description" rows="15" cols="120" tools="simple">simple(简单)</textarea>
-					</div>
-					<div class="unit">
-						<textarea class="editor" name="description" rows="15" cols="120" tools="mini">mini(迷你)</textarea>
-					</div>
-					<div class="unit">
-						<textarea class="editor" name="description" rows="15" cols="120"
-							tools="Cut,Copy,Paste,Pastetext,|,Source,Fullscreen,About">custom(自定义)</textarea>
-					</div>
-					<div class="unit">
-						<textarea class="editor" name="description" rows="15" cols="120"
-							tools="Cut,Copy,Paste,Pastetext,/,Source,Fullscreen,About">自定义多行模式</textarea>
-					</div>
-				</div>
-				<div class="formBar">
-					<ul>
-						<li><div class="buttonActive">
-								<div class="buttonContent">
-									<button type="submit">提交</button>
-								</div>
-							</div></li>
-						<li><div class="button">
-								<div class="buttonContent">
-									<button type="button" class="close">取消</button>
-								</div>
-							</div></li>
-					</ul>
-				</div>
-			</form>
+			</div>
+			<div class="unit">
+				<textarea class="editor" name="description" rows="15" cols="120">full(完全) 默认方式</textarea>
+			</div>
+			<div class="unit">
+				<textarea class="editor" name="description" rows="15" cols="120" tools="mfull">mfull(多行完全)</textarea>
+			</div>
+			<div class="unit">
+				<textarea class="editor" name="description" rows="15" cols="120" tools="simple">simple(简单)</textarea>
+			</div>
+			<div class="unit">
+				<textarea class="editor" name="description" rows="15" cols="120" tools="mini">mini(迷你)</textarea>
+			</div>
+			<div class="unit">
+				<textarea class="editor" name="description" rows="15" cols="120"
+					tools="Cut,Copy,Paste,Pastetext,|,Source,Fullscreen,About">custom(自定义)</textarea>
+			</div>
+			<div class="unit">
+				<textarea class="editor" name="description" rows="15" cols="120"
+					tools="Cut,Copy,Paste,Pastetext,/,Source,Fullscreen,About">自定义多行模式</textarea>
+			</div>
 		</div>
-	</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive">
+						<div class="buttonContent">
+							<button type="submit">提交</button>
+						</div>
+					</div></li>
+				<li><div class="button">
+						<div class="buttonContent">
+							<button type="button" class="close">取消</button>
+						</div>
+					</div></li>
+			</ul>
+		</div>
+	</form>
 </div>

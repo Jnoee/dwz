@@ -598,8 +598,8 @@ var DWZ = {
 					console.log("%s: %o", msg, this);
 			});
 		},
-		getPageDiv: function() {
-			return $(this).closest("div.page");
+		unitBox: function() {
+			return $(this).closest("div.unitBox");
 		}
 	});
 })(jQuery);
