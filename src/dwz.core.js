@@ -38,9 +38,9 @@ var DWZ = {
 		orderDirection: "orderDirection"
 	},
 	statusCode: {
-		ok: 200,
-		error: 300,
-		timeout: 301
+		ok: "200",
+		error: "300",
+		timeout: "301"
 	},
 	keys: {
 		statusCode: "statusCode",
@@ -340,19 +340,30 @@ var DWZ = {
 		}
 	},
 	ajaxDone: function(json) {
-		if(json[DWZ.keys.statusCode] == DWZ.statusCode.error) {
-			if(json[DWZ.keys.message] && alertMsg)
-				alertMsg.error(json[DWZ.keys.message]);
-		} else if(json[DWZ.keys.statusCode] == DWZ.statusCode.timeout) {
-			if(alertMsg)
-				alertMsg.error(json[DWZ.keys.message] || DWZ.msg("sessionTimout"), {
-					okCall: DWZ.loadLogin
-				});
-			else
-				DWZ.loadLogin();
-		} else if(json[DWZ.keys.statusCode] == DWZ.statusCode.ok) {
-			if(json[DWZ.keys.message] && alertMsg)
-				alertMsg.correct(json[DWZ.keys.message]);
+		var statusCode = json[DWZ.keys.statusCode];
+		var message = json[DWZ.keys.message];
+		switch(statusCode) {
+			case DWZ.statusCode.error:
+				if(message && alertMsg) {
+					alertMsg.error(message);
+				}
+				break;
+			case DWZ.statusCode.timeout:
+				if(alertMsg) {
+					alertMsg.error(message || DWZ.msg("sessionTimout"), {
+						okCall: DWZ.loadLogin
+					});
+				} else {
+					DWZ.loadLogin();
+				}
+				break;
+			case DWZ.statusCode.ok:
+				if(message && alertMsg) {
+					alertMsg.correct(message);
+				}
+				break;
+			default:
+				break;
 		}
 	},
 	init: function(options) {
@@ -424,15 +435,9 @@ var DWZ = {
 	}
 
 	$.fn.extend({
-		/**
-		 * @param {Object}
-		 *            op: {type:GET/POST, url:ajax请求地址, data:ajax请求参数列表, callback:回调函数 }
-		 */
 		ajaxUrl: function(op) {
 			var $this = $(this);
-
 			$this.trigger(DWZ.eventType.pageClear);
-
 			$.ajax({
 				type: op.type || 'GET',
 				dataType: 'html',
@@ -463,7 +468,6 @@ var DWZ = {
 							}
 						});
 					}
-
 				},
 				error: DWZ.ajaxError,
 				statusCode: {
@@ -486,12 +490,6 @@ var DWZ = {
 					initUI(this);
 			});
 		},
-		/**
-		 * adjust component inner reference box height
-		 * 
-		 * @param {Object}
-		 *            refBox: reference box jQuery Obj
-		 */
 		layoutH: function($refBox) {
 			return this.each(function() {
 				var $this = $(this);
@@ -576,26 +574,22 @@ var DWZ = {
 				return false;
 			return $(this)[0].tagName.toLowerCase() == tn ? true : false;
 		},
-		/**
-		 * 判断当前元素是否已经绑定某个事件
-		 * 
-		 * @param {Object}
-		 *            type
-		 */
 		isBind: function(type) {
 			var _events = $(this).data("events");
 			return _events && type && _events[type];
 		},
-		/**
-		 * 输出firebug日志
-		 * 
-		 * @param {Object}
-		 *            msg
-		 */
 		log: function(msg) {
 			return this.each(function() {
 				if(console)
 					console.log("%s: %o", msg, this);
+			});
+		},
+		viewSource: function() {
+			$(this).each(function(){
+				$(this).click(function(event) {
+					event.preventDefault();
+					window.open("view-source:" + this.href);
+				}); 
 			});
 		},
 		unitBox: function() {

@@ -42,15 +42,13 @@ function initEnv() {
 		initLayout();
 		initUI();
 
-		// navTab styles
 		var jTabsPH = $("div.tabsPageHeader");
 		jTabsPH.find(".tabsLeft").hoverClass("tabsLeftHover");
 		jTabsPH.find(".tabsRight").hoverClass("tabsRightHover");
 		jTabsPH.find(".tabsMore").hoverClass("tabsMoreHover");
-
 	}, 10);
-
 }
+
 function initLayout() {
 	var iContentW = $(window).width() - (DWZ.ui.sbar ? $("#sidebar").width() + 10 : 34) - 5;
 	var iContentH = $(window).height() - $("#header").height() - 34;
@@ -322,14 +320,14 @@ function initUI(_box) {
 		$("form[rel=pagerForm]", $p).pagerForm({
 			parentBox: $p
 		});
-	
+
 	// 处理awesome字体图标
 	$("[class*=fa-]:not(i)").each(function() {
 		var i = $("<i></i>");
 		i.css("line-height", "inherit");
 		i.addClass("fa");
-		var classes  = $(this).attr("class").split(" ");
-		for(var x in classes) {
+		var classes = $(this).attr("class").split(" ");
+		for( var x in classes) {
 			if(classes[x].startsWith("fa-")) {
 				i.addClass(classes[x]);
 				$(this).removeClass(classes[x]);
@@ -340,6 +338,10 @@ function initUI(_box) {
 		}
 		$(this).prepend(i);
 	});
+	
+	if($.fn.viewSource) {
+		$("a.viewsource", $p).viewSource();
+	}
 
 	$.each(DWZ.regPlugins, function(index, fn) {
 		fn($p);

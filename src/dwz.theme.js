@@ -16,7 +16,7 @@
 					$("head").find("link[href^='" + op.themeBase + "']").each(function() {
 						var href = $(this).attr("href");
 						var css = href.substring(href.lastIndexOf("/"));
-						$(this).attr("href", op.themeBase + "/" + themeName + "/" + css);
+						$(this).attr("href", op.themeBase + "/" + themeName + css);
 					});
 					jThemeLi.find(">div").removeClass("selected");
 					jThemeLi.filter("[theme=" + themeName + "]").find(">div").addClass("selected");

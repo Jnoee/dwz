@@ -1,6 +1,10 @@
+<meta charset="UTF-8" />
 <div class="pageHeader">
 	<form id="pagerForm" action="widget/table-batch.html" method="post" class="pageForm" onsubmit="return navTabSearch(this);">
-		<input type="hidden" name="pageNum" value="1" /> <input type="hidden" name="numPerPage" value="20" /> <input type="hidden" name="orderField" value="accountNo" /> <input type="hidden" name="orderDirection" value="asc" />
+		<input type="hidden" name="pageNum" value="1" />
+		<input type="hidden" name="numPerPage" value="20" />
+		<input type="hidden" name="orderField" value="accountNo" />
+		<input type="hidden" name="orderDirection" value="asc" />
 		<div class="searchBar">
 			<div class="subBar">
 				<ul>
@@ -12,7 +16,7 @@
 							<option value="天津">天津</option>
 							<option value="重庆">重庆</option>
 							<option value="广东">广东</option>
-						</select></li>
+					</select></li>
 					<li><div class="buttonActive">
 							<div class="buttonContent">
 								<button type="submit">检索</button>
@@ -34,6 +38,8 @@
 			<li><a target="selectedTodo" rel="ids" href="result/navtab-reload.json" title="确实要删除这些记录吗?" postType="string"><span class="fa-trash-o">批量删除（逗号分隔）</span></a></li>
 			<li class="line">line</li>
 			<li><a href="common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span class="fa-download">导出EXCEL</span></a></li>
+			<li class="line">line</li>
+			<li><a href="widget/table-batch.html" class="viewsource"><span class="fa-file-text">查看源文件</span></a></li>
 		</ul>
 	</div>
 	<table class="table" width="100%" layoutH="112">
@@ -275,14 +281,12 @@
 	</table>
 	<div class="panelBar">
 		<div class="pages">
-			<span>显示</span>
-			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+			<span>显示</span> <select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
 				<option value="20">20</option>
 				<option value="50">50</option>
 				<option value="100">100</option>
 				<option value="200">200</option>
-			</select>
-			<span>条，共200条</span>
+			</select> <span>条，共200条</span>
 		</div>
 		<div class="pagination" targetType="navTab" totalCount="200" numPerPage="20" pageNumShown="10" currentPage="1"></div>
 	</div>

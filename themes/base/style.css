@@ -543,10 +543,6 @@ body, #splitBar {
 }
 
 /* Pages */
-.pageForm .inputInfo {
-	color: #999;
-}
-
 /* Pages dialog */
 .dialog .pageHeader, .dialog .pageContent {
 	border-color: #b8d0d6;
@@ -560,7 +556,7 @@ body, #splitBar {
 /* Pages default */
 .page .pageHeader, .formBar {
 	border-color: #b8d0d6;
-	background: #ebf0f5 url(../default/images/pageHeader_bg.png) repeat-x;
+	background: #ebf0f5 url(./images/pageHeader_bg.png) repeat-x;
 }
 
 .page .searchBar label {
@@ -586,5 +582,5 @@ body, #splitBar {
 }
 
 .combox, .combox div, .combox div a {
-	background: url(../default/images/search-bg.gif) no-repeat;
+	background: url(./images/search-bg.gif) no-repeat;
 }

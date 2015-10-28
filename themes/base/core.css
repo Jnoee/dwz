@@ -1372,7 +1372,7 @@ table.list {
 }
 
 table.list thead tr {
-	background: url("../default/images/grid/tableth.png") repeat-x scroll 0
+	background: url("./images/grid/tableth.png") repeat-x scroll 0
 		0 #F0EFF0;
 }
 
@@ -1393,13 +1393,13 @@ table.list td {
 
 table.list th.asc, .grid .gridHeader th.asc {
 	background-position: 100% 0;
-	background: url(../default/images/order_up.gif) no-repeat right;
+	background: url(./images/order_up.gif) no-repeat right;
 	cursor: pointer;
 }
 
 table.list th.desc, .grid .gridHeader th.desc {
 	background-position: 100% 0;
-	background: url(../default/images/order_down.gif) no-repeat right;
+	background: url(./images/order_down.gif) no-repeat right;
 	cursor: pointer;
 }
 

@@ -1,9 +1,13 @@
+<meta charset="UTF-8" />
 <div class="pageContent">
-	<h2 class="contentTitle">选择框</h2>
+	<h2 class="contentTitle">
+		选择框 <a href="widget/combox.html" class="fa-file-text viewsource" title="查看源文件"></a>
+	</h2>
 	<div class="pageFormContent" layoutH="47">
 		<dl class="nowrap">
 			<dt>单个选择框：</dt>
-			<dd><select class="combox" name="test">
+			<dd>
+				<select class="combox" name="test">
 					<option value="1">1</option>
 					<option value="2">2</option>
 					<option value="3">3</option>
@@ -13,11 +17,13 @@
 					<option value="7">7</option>
 					<option value="8">8</option>
 					<option value="9">9</option>
-				</select></dd>
+				</select>
+			</dd>
 		</dl>
 		<dl class="nowrap">
 			<dt>联动选择框：</dt>
-			<dd><select class="combox" name="province" ref="w_combox_city" refUrl="data/combox-city-{value}.html">
+			<dd>
+				<select class="combox" name="province" ref="w_combox_city" refUrl="data/combox-city-{value}.html">
 					<option value="all">所有省市</option>
 					<option value="bj">北京</option>
 					<option value="sh">上海</option>
@@ -25,7 +31,8 @@
 					<option value="all">所有城市</option>
 				</select> <select class="combox" name="area" id="w_combox_area">
 					<option value="all">所有区县</option>
-				</select></dd>
+				</select>
+			</dd>
 		</dl>
 	</div>
 </div>

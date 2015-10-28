@@ -23,7 +23,8 @@
 		<script type="text/javascript">
 			$(function() {
 				DWZ.init({
-					loginUrl: "login.html", // 跳到登录页面
+					loginUrl: "login-dialog.html",
+					loginTitle: "登录",
 					callback: function() {
 						initEnv();
 						$("#themeList").theme({
@@ -61,6 +62,7 @@
 						<li><a href="change-pwd.html" target="dialog" width="SS" height="SSS" mask="true">设置</a></li>
 						<li><a href="login.html">退出</a></li>
 					</ul>
+					<!-- 
 					<ul class="themeList" id="themeList">
 						<li theme="base"><div class="selected">蓝色</div></li>
 						<li theme="green"><div>绿色</div></li>
@@ -68,13 +70,14 @@
 						<li theme="silver"><div>银色</div></li>
 						<li theme="azure"><div>天蓝</div></li>
 					</ul>
+					 -->
 				</div>
 	
 				<div id="navMenu">
 					<ul>
 						<li><a href="start/menu.html"><span>起步</span></a></li>
 						<li><a href="widget/menu.html"><span>组件</span></a></li>
-						<li><a href="extends/menu.html"><span>扩展</span></a></li>
+						<li><a href="external/menu.html"><span>扩展</span></a></li>
 						<li><a href="demo/menu.html"><span>实例</span></a></li>
 					</ul>
 				</div>
