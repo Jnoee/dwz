@@ -1,8 +1,6 @@
 <div class="pageHeader">
-	<form id="pagerForm" action="widget/table-batch.html" method="post" class="pageForm"
-		onsubmit="return navTabSearch(this);">
-		<input type="hidden" name="pageNum" value="1" /> <input type="hidden" name="numPerPage" value="20" /> <input
-			type="hidden" name="orderField" value="accountNo" /> <input type="hidden" name="orderDirection" value="asc" />
+	<form id="pagerForm" action="widget/table-batch.html" method="post" class="pageForm" onsubmit="return navTabSearch(this);">
+		<input type="hidden" name="pageNum" value="1" /> <input type="hidden" name="numPerPage" value="20" /> <input type="hidden" name="orderField" value="accountNo" /> <input type="hidden" name="orderDirection" value="asc" />
 		<div class="searchBar">
 			<div class="subBar">
 				<ul>
@@ -14,7 +12,7 @@
 							<option value="天津">天津</option>
 							<option value="重庆">重庆</option>
 							<option value="广东">广东</option>
-					</select></li>
+						</select></li>
 					<li><div class="buttonActive">
 							<div class="buttonContent">
 								<button type="submit">检索</button>
@@ -28,20 +26,14 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a href="data/table-add.html" target="dialog" rel="table-add" mask="true" title="新增客户"><span
-					class="fa-plus">新增</span></a></li>
-			<li><a href="data/table-add.html?uid={sid_user}" target="dialog" mask="true" warn="请选择一个用户" title="编辑客户"><span
-					class="fa-edit">编辑</span></a></li>
-			<li><a href="result/navtab-refresh.json?uid={sid_user}" target="ajaxTodo" title="确定要删除吗?"><span
-					class="fa-minus">删除</span></a></li>
+			<li><a href="data/table-add.html" target="dialog" rel="table-add" mask="true" title="新增客户"><span class="fa-plus">新增</span></a></li>
+			<li><a href="data/table-add.html?uid={sid_user}" target="dialog" mask="true" warn="请选择一个用户" title="编辑客户"><span class="fa-edit">编辑</span></a></li>
+			<li><a href="result/navtab-reload.json?uid={sid_user}" target="ajaxTodo" title="确定要删除吗?"><span class="fa-minus">删除</span></a></li>
 			<li class="line">line</li>
-			<li><a target="selectedTodo" rel="ids" href="result/navtab-refresh.json" title="确实要删除这些记录吗?"><span
-					class="fa-trash">批量删除（默认方式）</span></a></li>
-			<li><a target="selectedTodo" rel="ids" href="result/navtab-refresh.json" title="确实要删除这些记录吗?" postType="string"><span
-					class="fa-trash-o">批量删除（逗号分隔）</span></a></li>
+			<li><a target="selectedTodo" rel="ids" href="result/navtab-reload.json" title="确实要删除这些记录吗?"><span class="fa-trash">批量删除（默认方式）</span></a></li>
+			<li><a target="selectedTodo" rel="ids" href="result/navtab-reload.json" title="确实要删除这些记录吗?" postType="string"><span class="fa-trash-o">批量删除（逗号分隔）</span></a></li>
 			<li class="line">line</li>
-			<li><a href="common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span
-					class="fa-download">导出EXCEL</span></a></li>
+			<li><a href="common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span class="fa-download">导出EXCEL</span></a></li>
 		</ul>
 	</div>
 	<table class="table" width="100%" layoutH="112">
@@ -68,8 +60,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="2">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -80,8 +71,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="3">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -92,8 +82,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="4">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -104,8 +93,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="5">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -116,8 +104,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="6">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -128,8 +115,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="7">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -140,8 +126,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="8">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -152,8 +137,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="9">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -164,8 +148,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="10">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -176,8 +159,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="11">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -188,8 +170,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="12">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -200,8 +181,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="13">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -212,8 +192,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="14">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -224,8 +203,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="15">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -236,8 +214,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="16">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -248,8 +225,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="17">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -260,8 +236,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="18">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -272,8 +247,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="19">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -284,8 +258,7 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 			<tr target="sid_user" rel="20">
 				<td><input name="ids" value="xxx" type="checkbox" /></td>
@@ -296,19 +269,20 @@
 				<td>5级</td>
 				<td>政府机构</td>
 				<td>2009-05-21</td>
-				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a
-					href="result/navtab-refresh.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
+				<td><a href="data/table-add.html" target="dialog" mask="true" title="编辑客户资料">编辑</a>&nbsp;<a href="result/navtab-reload.json" target="ajaxTodo" title="您确定要删除该记录吗？">删除</a></td>
 			</tr>
 		</tbody>
 	</table>
 	<div class="panelBar">
 		<div class="pages">
-			<span>显示</span> <select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+			<span>显示</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
 				<option value="20">20</option>
 				<option value="50">50</option>
 				<option value="100">100</option>
 				<option value="200">200</option>
-			</select> <span>条，共200条</span>
+			</select>
+			<span>条，共200条</span>
 		</div>
 		<div class="pagination" targetType="navTab" totalCount="200" numPerPage="20" pageNumShown="10" currentPage="1"></div>
 	</div>

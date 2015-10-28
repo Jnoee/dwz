@@ -1,7 +1,6 @@
 <div class="pageHeader">
 	<form id="pagerForm" method="post" action="data/lookup-select.html" onsubmit="return dwzSearch(this, 'dialog');">
-		<input type="hidden" name="pageNum" value="1" /> <input type="hidden" name="numPerPage" value="20" /> <input
-			type="hidden" name="orderField" value="" /> <input type="hidden" name="orderDirection" value="" />
+		<input type="hidden" name="pageNum" value="1" /> <input type="hidden" name="numPerPage" value="20" /> <input type="hidden" name="orderField" value="" /> <input type="hidden" name="orderDirection" value="" />
 		<div class="searchBar">
 			<div class="subBar">
 				<ul>
@@ -35,27 +34,27 @@
 				<td>1001</td>
 				<td>administrator</td>
 				<td>administrator</td>
-				<td><a class="green fa-check" href="javascript:$.lookupBack({id:'1', orgName:'技术部', orgNum:'1001'})"
-					title="查找带回"></a></td>
+				<td><a class="green fa-check" href="javascript:$.lookupBack({id:'1', orgName:'技术部', orgNum:'1001'})" title="查找带回"></a></td>
 			</tr>
 			<tr>
 				<td>人事部</td>
 				<td>1002</td>
 				<td>test</td>
 				<td>administrator</td>
-				<td><a class="green fa-check" href="javascript:$.lookupBack({id:'2', orgName:'人事部', orgNum:'1002'})"
-					title="查找带回"></a></td>
+				<td><a class="green fa-check" href="javascript:$.lookupBack({id:'2', orgName:'人事部', orgNum:'1002'})" title="查找带回"></a></td>
 			</tr>
 		</tbody>
 	</table>
 	<div class="panelBar">
 		<div class="pages">
-			<span>每页</span> <select name="numPerPage" onchange="dwzPageBreak({targetType:'dialog', numPerPage:'20'})">
+			<span>每页</span>
+			<select name="numPerPage" onchange="dwzPageBreak({targetType:'dialog', numPerPage:'20'})">
 				<option value="20" selected="selected">20</option>
 				<option value="30">30</option>
 				<option value="50">50</option>
 				<option value="100">100</option>
-			</select> <span>条，共2条</span>
+			</select>
+			<span>条，共2条</span>
 		</div>
 		<div class="pagination" targetType="dialog" totalCount="2" numPerPage="20" pageNumShown="1" currentPage="1"></div>
 	</div>

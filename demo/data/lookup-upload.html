@@ -1,13 +1,10 @@
 <div class="pageContent">
 	<h2 class="contentTitle">请选择需要上传的附件</h2>
-	<form action="result/lookup-upload.json" method="post" enctype="multipart/form-data" class="pageForm required-validate"
-		onsubmit="return iframeCallback(this, $.lookupBack)">
+	<form action="result/lookup-upload.json" method="post" enctype="multipart/form-data" class="pageForm required-validate" onsubmit="return iframeCallback(this, $.lookupBack)">
 		<div class="pageFormContent" layoutH="88">
 			<dl>
 				<dt>附件：</dt>
-				<dd>
-					<input type="file" name="image" class="required" size="30" />
-				</dd>
+				<dd><input type="file" name="image" class="required" size="30" /></dd>
 			</dl>
 		</div>
 		<div class="formBar">

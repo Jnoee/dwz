@@ -1,19 +1,18 @@
 <div class="pageHeader">
 	<form id="pagerForm" action="widget/table-list.html" method="post" onsubmit="return navTabSearch(this);">
-		<input type="hidden" name="pageNum" value="1" /> <input type="hidden" name="numPerPage" value="20" /> <input
-			type="hidden" name="orderField" value="customerNo" /> <input type="hidden" name="orderDirection" value="asc" />
+		<input type="hidden" name="pageNum" value="1" /> <input type="hidden" name="numPerPage" value="20" /> <input type="hidden" name="orderField" value="customerNo" /> <input type="hidden" name="orderDirection" value="asc" />
 		<div class="searchBar">
 			<ul class="searchContent">
-				<li><label>客户名称：</label><input type="text" /></li>
-				<li><label>所在省份：</label><select class="combox" name="province">
+				<li><label>客户名称：</label> <input type="text" /></li>
+				<li><label>所在省份：</label> <select class="combox" name="province">
 						<option value="">所有省市</option>
 						<option value="北京">北京</option>
 						<option value="上海">上海</option>
 						<option value="天津">天津</option>
 						<option value="重庆">重庆</option>
 						<option value="广东">广东</option>
-				</select></li>
-				<li><label>建档日期：</label><input type="text" class="date" readonly="true" /></li>
+					</select></li>
+				<li><label>建档日期：</label> <input type="text" class="date" readonly="true" /></li>
 			</ul>
 			<div class="subBar">
 				<ul>
@@ -30,15 +29,11 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a href="data/table-add.html" target="dialog" rel="table-add" mask="true" title="新增客户"><span
-					class="fa-plus">新增</span></a></li>
-			<li><a href="data/table-add.html?uid={sid_user}" target="dialog" mask="true" warn="请选择一个用户" title="编辑客户"><span
-					class="fa-edit">编辑</span></a></li>
-			<li><a href="result/navtab-refresh.json?uid={sid_user}" target="ajaxTodo" title="确定要删除吗?"><span
-					class="fa-minus">删除</span></a></li>
+			<li><a href="data/table-add.html" target="dialog" rel="table-add" mask="true" title="新增客户"><span class="fa-plus">新增</span></a></li>
+			<li><a href="data/table-add.html?uid={sid_user}" target="dialog" mask="true" warn="请选择一个用户" title="编辑客户"><span class="fa-edit">编辑</span></a></li>
+			<li><a href="result/navtab-reload.json?uid={sid_user}" target="ajaxTodo" title="确定要删除吗?"><span class="fa-minus">删除</span></a></li>
 			<li class="line">line</li>
-			<li><a href="common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span
-					class="fa-download">导出EXCEL</span></a></li>
+			<li><a href="common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span class="fa-download">导出EXCEL</span></a></li>
 			<li class="line">line</li>
 			<li><a href="javascript:$.printBox('print_table')"><span class="fa-print">打印</span></a></li>
 		</ul>
@@ -292,12 +287,14 @@
 	</div>
 	<div class="panelBar">
 		<div class="pages">
-			<span>显示</span> <select name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+			<span>显示</span>
+			<select name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
 				<option value="20">20</option>
 				<option value="50">50</option>
 				<option value="100">100</option>
 				<option value="200">200</option>
-			</select> <span>条，共23条</span>
+			</select>
+			<span>条，共23条</span>
 		</div>
 		<div class="pagination" targetType="navTab" totalCount="200" numPerPage="20" pageNumShown="10" currentPage="1"></div>
 	</div>

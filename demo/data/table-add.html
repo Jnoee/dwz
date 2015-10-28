@@ -1,6 +1,5 @@
 <div class="pageContent">
-	<form method="post" action="result/dialog-refresh.json" class="pageForm required-validate"
-		onsubmit="return validateCallback(this, dialogAjaxDone);">
+	<form method="post" action="result/dialog-close.json" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
 		<div class="pageFormContent" layoutH="58">
 			<p>
 				<label>客 户 号：</label> <input name="sn" type="text" value="100001" readonly="readonly" />
@@ -9,10 +8,7 @@
 				<label>客户名称：</label> <input name="name" class="required" type="text" alt="请输入客户名称" />
 			</p>
 			<p>
-				<label>部门名称：</label> <input type="hidden" name="orgLookup.id" value="${orgLookup.id}" /> <input type="text"
-					class="required" name="orgLookup.orgName" value="" suggestFields="orgNum,orgName"
-					suggestUrl="data/suggest-data.html" lookupGroup="orgLookup" /> <a class="btn fa-search-plus"
-					href="data/lookup-select.html" lookupGroup="orgLookup">查找带回</a>
+				<label>部门名称：</label> <input type="hidden" name="orgLookup.id" value="${orgLookup.id}" /> <input type="text" class="required" name="orgLookup.orgName" value="" suggestFields="orgNum,orgName" suggestUrl="data/suggest-data.html" lookupGroup="orgLookup" /> <a class="btn fa-search-plus" href="data/lookup-select.html" lookupGroup="orgLookup">查找带回</a>
 			</p>
 			<p>
 				<label>部门编号：</label> <input type="text" readonly="readonly" value="" name="dwz_orgLookup.orgNum" class="textInput">
@@ -21,7 +17,8 @@
 				<label>识 别 码：</label> <input name="code" class="digits" type="text" alt="请输入数字" />
 			</p>
 			<p>
-				<label>客户类型：</label> <select name="type" class="required combox">
+				<label>客户类型：</label>
+				<select name="type" class="required combox">
 					<option value="">请选择</option>
 					<option value="个人">个人</option>
 					<option value="公司" selected>公司</option>
@@ -31,20 +28,20 @@
 				<label>营业执照号：</label> <input type="text" />
 			</p>
 			<p>
-				<label>执照签发日期：</label> <input type="text" name="startDate" class="date" /><a class="btn fa-calendar"
-					href="javascript:;">选择</a>
+				<label>执照签发日期：</label> <input type="text" name="startDate" class="date" /> <a class="btn fa-calendar" href="javascript:;">选择</a>
 			</p>
 			<p>
-				<label>执照到期日期：</label> <input type="text" name="endDate" class="date" /><a class="btn fa-calendar"
-					href="javascript:;">选择</a>
+				<label>执照到期日期：</label> <input type="text" name="endDate" class="date" /> <a class="btn fa-calendar" href="javascript:;">选择</a>
 			</p>
 			<p>
-				<label>注册资金：</label> <select name="capital" class="required combox">
+				<label>注册资金：</label>
+				<select name="capital" class="required combox">
 					<option value="">请选择</option>
 					<option value="10">10</option>
 					<option value="50" selected>50</option>
 					<option value="100">100</option>
-				</select> <span class="unit">万元</span>
+				</select>
+				<span class="unit">万元</span>
 			</p>
 			<p>
 				<label>注册类型：</label> <input type="text" />

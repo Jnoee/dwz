@@ -1,7 +1,6 @@
 <div class="pageHeader">
 	<form id="pagerForm" method="post" action="data/lookup-select-multi.html" onsubmit="return dwzSearch(this, 'dialog');">
-		<input type="hidden" name="pageNum" value="1" /> <input type="hidden" name="numPerPage" value="10" /> <input
-			type="hidden" name="orderField" value="orgNum" /> <input type="hidden" name="orderDirection" value="asc" />
+		<input type="hidden" name="pageNum" value="1" /> <input type="hidden" name="numPerPage" value="10" /> <input type="hidden" name="orderField" value="orgNum" /> <input type="hidden" name="orderDirection" value="asc" />
 		<div class="searchBar">
 			<ul class="searchContent">
 				<li><label>部门名称:</label> <input class="textInput" name="orgName" value="" type="text"></li>
@@ -63,12 +62,14 @@
 	</table>
 	<div class="panelBar">
 		<div class="pages">
-			<span>每页</span> <select name="numPerPage" onchange="dwzPageBreak({targetType:'dialog', numPerPage:'10'})">
+			<span>每页</span>
+			<select name="numPerPage" onchange="dwzPageBreak({targetType:'dialog', numPerPage:'10'})">
 				<option value="10" selected="selected">10</option>
 				<option value="20">20</option>
 				<option value="50">50</option>
 				<option value="100">100</option>
-			</select> <span>条，共3条</span>
+			</select>
+			<span>条，共3条</span>
 		</div>
 		<div class="pagination" targetType="dialog" totalCount="3" numPerPage="10" pageNumShown="1" currentPage="1"></div>
 	</div>
