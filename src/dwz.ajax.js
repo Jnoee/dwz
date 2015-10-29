@@ -66,6 +66,7 @@ function iframeCallback(form, callback) {
 
 	_iframeResponse($iframe[0], callback || DWZ.ajaxDone);
 }
+
 function _iframeResponse(iframe, callback) {
 	var $iframe = $(iframe), $document = $(document);
 
@@ -149,6 +150,63 @@ function navTabAjaxDone(json) {
 				var initVal = $(this).attr("initValue");
 				$(this).val(initVal);
 			});
+		}
+	}
+}
+
+function navTabClose(json) {
+	DWZ.ajaxDone(json);
+	if(json.navTabId) {
+		var navTabIds = json.navTabId.split(",");
+		for(var i = 0; i < navTabIds.length; i++) {
+			if(navTabIds[i] === "this") {
+				navTab.closeCurrentTab();
+			} else {
+				navTab.closeTab(navTabIds[i]);
+			}
+		}
+	}
+}
+
+function navTabCloseOther(json) {
+	DWZ.ajaxDone(json);
+	setTimeout(function() {
+		navTab.closeTab(json.navTabId);
+	}, 100);
+}
+
+function navTabReload(json) {
+	DWZ.ajaxDone(json);
+	if(json[DWZ.keys.statusCode] == DWZ.statusCode.ok) {
+		if(json.navTabId) {
+			navTab.reloadFlag(json.navTabId);
+		} else {
+			var $pagerForm = $("#pagerForm", navTab.getCurrentPanel());
+			var args = $pagerForm.size() > 0 ? $pagerForm.serializeArray() : {}
+			navTabPageBreak(args, "");
+		}
+	}
+}
+
+function dialogClose(json) {
+	DWZ.ajaxDone(json);
+	var dialogIds = json.dialogId.split(",");
+	for(var i = 0; i < dialogIds.length; i++) {
+		if(dialogIds[i] === "this") {
+			$.pdialog.closeCurrent();
+		} else {
+			$.pdialog.close(dialogIds[i]);
+		}
+	}
+}
+
+function dialogReload(json) {
+	DWZ.ajaxDone(json);
+	if(json.statusCode == DWZ.statusCode.ok) {
+		if(json.dialogId) {
+			reloadDialog(json.dialogId);
+		} else {
+			reloadDialog($.pdialog._current);
 		}
 	}
 }
