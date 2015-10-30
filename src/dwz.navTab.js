@@ -366,13 +366,17 @@ var navTab = {
 				if($tab.hasClass("external")) {
 					navTab.openExternal(url, $panel);
 				} else {
-					if($.isEmptyObject(op.data)) { // 获取pagerForm参数
-						var $pagerForm = $("#pagerForm", $panel);
-						var serializeArray = $pagerForm.size() > 0 ? $pagerForm.eq(0).serializeArray() : {};
-						// 把pagerForm中带的参数从数组形式转换成op.data上的属性，方便后面对参数进行覆盖。
-						op.data = $.serializeArrayToJson(serializeArray);
+					var $pagerForm = $("#pagerForm", $panel);
+					if($pagerForm.size() > 0) {
+						$pagerForm = $pagerForm.eq(0);
+					} else {
+						$pagerForm = null;
 					}
-					// 如果url上带有参数，则将url参数覆盖掉op.data上的参数。
+					
+					var serializeArray = $pagerForm ? $pagerForm.serializeArray() : {};
+					if(!$.isEmptyObject(serializeArray)) {
+						$.extend(op.data, $.serializeArrayToJson(serializeArray));
+					}
 					$.extend(op.data, url.getParams());
 
 					$panel.ajaxUrl({

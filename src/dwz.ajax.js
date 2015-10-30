@@ -122,82 +122,131 @@ function _iframeResponse(iframe, callback) {
 function navTabAjaxDone(json) {
 	DWZ.ajaxDone(json);
 	if(json[DWZ.keys.statusCode] == DWZ.statusCode.ok) {
-		if(json.navTabId) { // 把指定navTab页面标记为需要“重新载入”。注意navTabId不能是当前navTab页面的
-			navTab.reloadFlag(json.navTabId);
-		} else { // 重新载入当前navTab页面
-			var $pagerForm = $("#pagerForm", navTab.getCurrentPanel());
-			var args = $pagerForm.size() > 0 ? $pagerForm.serializeArray() : {}
-			navTabPageBreak(args, json.rel);
-		}
-
-		if("closeCurrent" == json.callbackType) {
-			setTimeout(function() {
-				navTab.closeCurrentTab(json.navTabId);
-			}, 100);
-		} else if("forward" == json.callbackType) {
-			navTab.reload(json.forwardUrl);
-		} else if("forwardConfirm" == json.callbackType) {
-			alertMsg.confirm(json.confirmMsg || DWZ.msg("forwardConfirmMsg"), {
-				okCall: function() {
-					navTab.reload(json.forwardUrl);
-				},
-				cancelCall: function() {
-					navTab.closeCurrentTab(json.navTabId);
-				}
-			});
-		} else {
-			navTab.getCurrentPanel().find(":input[initValue]").each(function() {
-				var initVal = $(this).attr("initValue");
-				$(this).val(initVal);
-			});
-		}
+		_closeNavTab(json);
+		_closeDialog(json);
+		_reloadNavTab(json);
+		_reloadDialog(json);
+		_reloadNavTabDiv(json);
+		_reloadDialogDiv(json)
 	}
 }
 
-function navTabClose(json) {
-	DWZ.ajaxDone(json);
-	if(json.navTabId) {
-		var navTabIds = json.navTabId.split(",");
-		for(var i = 0; i < navTabIds.length; i++) {
-			if(navTabIds[i] === "this") {
-				navTab.closeCurrentTab();
-			} else {
-				navTab.closeTab(navTabIds[i]);
-			}
-		}
-	}
-}
-
-function navTabCloseOther(json) {
-	DWZ.ajaxDone(json);
-	setTimeout(function() {
-		navTab.closeTab(json.navTabId);
-	}, 100);
-}
-
-function navTabReload(json) {
+function ajaxDone(json) {
 	DWZ.ajaxDone(json);
 	if(json[DWZ.keys.statusCode] == DWZ.statusCode.ok) {
-		if(json.navTabId) {
-			navTab.reloadFlag(json.navTabId);
+		_closeNavTab(json);
+		_closeDialog(json);
+		_reloadNavTab(json);
+		_reloadDialog(json);
+		_reloadNavTabDiv(json);
+		_reloadDialogDiv(json)
+	}
+}
+
+function _closeNavTab(json) {
+	var navTabs = _parseToResults(json.closeNavTab);
+	for(var i = 0; i < navTabs.length; i++) {
+		if(navTabs[i].id === "current") {
+			navTab.closeCurrentTab();
 		} else {
-			var $pagerForm = $("#pagerForm", navTab.getCurrentPanel());
-			var args = $pagerForm.size() > 0 ? $pagerForm.serializeArray() : {}
-			navTabPageBreak(args, "");
+			navTab.closeTab(navTabs[i]);
 		}
 	}
 }
 
-function dialogClose(json) {
-	DWZ.ajaxDone(json);
-	var dialogIds = json.dialogId.split(",");
-	for(var i = 0; i < dialogIds.length; i++) {
-		if(dialogIds[i] === "this") {
+function _reloadNavTab(json) {
+	var navTabs = _parseToResults(json.reloadNavTab);
+	for(var i = 0; i < navTabs.length; i++) {
+		var reloadOptions = {
+			data: navTabs[i].data || {},
+			navTabId: navTabs[i].id === "current" ? "" : navTabs[i].id,
+			callback: navTabs[i].callback
+		};
+		navTab.reload(navTabs[i].url, reloadOptions);
+	}
+}
+
+function _closeDialog(json) {
+	var dialogs = _parseToResults(json.closeDialog);
+	for(var i = 0; i < dialogs.length; i++) {
+		if(dialogs[i].id === "current") {
 			$.pdialog.closeCurrent();
 		} else {
-			$.pdialog.close(dialogIds[i]);
+			$.pdialog.close(dialogs[i]);
 		}
 	}
+}
+
+function _reloadDialog(json) {
+	var dialogs = _parseToResults(json.reloadDialog);
+	for(var i = 0; i < dialogs.length; i++) {
+		var reloadOptions = {
+			data: dialogs[i].data || {},
+			navTabId: dialogs[i].id === "current" ? "" : dialogs[i].id,
+			callback: dialogs[i].callback
+		};
+		$.pdialog.reload(dialogs[i].url || $.pdialog._current.data("url"), reloadOptions);
+	}
+}
+
+function _reloadNavTabDiv(json) {
+	_reloadDiv("navTab", json);
+}
+
+function _reloadDialogDiv(json) {
+	_reloadDiv("dialog", json);
+}
+
+function _reloadDiv(targetType, json) {
+	var divs = targetType == "dialog" ? _parseToResults(json.reloadDialogDiv) : _parseToResults(json.reloadNavTabDiv);
+	var $parent = targetType == "dialog" ? $.pdialog.getCurrent() : navTab.getCurrentPanel();
+	for(var i = 0; i < divs.length; i++) {
+		var reloadOptions = {
+			data: divs[i].data || {},
+			callback: divs[i].callback
+		};
+		var $box = $parent.find("#" + divs[i].id);
+		var $pagerForm = $("#pagerForm", $box);
+		if($pagerForm.size() > 0) {
+			$pagerForm = $pagerForm.eq(0);
+		} else {
+			$pagerForm = null;
+		}
+
+		var serializeArray = $pagerForm ? $pagerForm.serializeArray() : {};
+		if(!$.isEmptyObject(serializeArray)) {
+			$.extend(reloadOptions.data, $.serializeArrayToJson(serializeArray));
+		}
+		var url = divs[i].url || $pageForm.attr("action");
+		$.extend(reloadOptions.data, url.getParams());
+
+		$box.ajaxUrl({
+			type: "POST",
+			url: url,
+			data: reloadOptions.data,
+			callback: function(response) {
+				$box.find("[layoutH]").layoutH();
+				if($.isFunction(reloadOptions.callback)) {
+					reloadOptions.callback(response);
+				}
+			}
+		});
+	}
+}
+
+function _parseToResults(arrays) {
+	var results = [];
+	for(var i = 0; i < arrays.length; i++) {
+		var attrs = arrays[i].split(",");
+		var result = {
+			id: attrs[0],
+			url: attrs[1] || null,
+			data: attrs[2] ? attrs[2].toJson() : null,
+			callback: attrs[3] || null
+		}
+		results.push(result);
+	}
+	return results;
 }
 
 function dialogReload(json) {

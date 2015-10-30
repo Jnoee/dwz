@@ -40,4 +40,4 @@ type ..\src\dwz.history.js >> dwz.min.js
 type ..\src\dwz.print.js >> dwz.min.js
 type ..\src\dwz.regional.zh.js >> dwz.min.js
 
-uglifyjs dwz.min.js -o dwz.min.js -c -m
+rem uglifyjs dwz.min.js -o dwz.min.js -c -m

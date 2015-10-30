@@ -84,6 +84,13 @@
 		escape: function() { // 处理jquery选择表达式中的特殊字符
 			return this.replace(/[#;&,\.\+\*~':"!\^\$\[\]\(\)=>|\/\\]/g, "\\$&");
 		},
+		toJson: function() {
+			if(this.length > 0) {
+				return $.parseJSON('{"' + decodeURI(this.replace(/&/g, "\",\"").replace(/=/g, "\":\"")) + '"}');
+			} else {
+				return {};
+			}
+		},
 		cleanParams: function() { // 清除参数
 			var index = this.indexOf("?");
 			if(index == -1) {
@@ -97,7 +104,7 @@
 				return {};
 			}
 			var params = this.substring(index + 1);
-			return $.parseJSON('{"' + decodeURI(params.replace(/&/g, "\",\"").replace(/=/g, "\":\"")) + '"}');
+			return params.toJson();
 		}
 	});
 })();
