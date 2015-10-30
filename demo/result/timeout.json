@@ -1,7 +1,4 @@
 {
 	"statusCode": "301",
 	"message": "您未登录或会话已过期。",
-	"navTabId": "",
-	"callbackType": "",
-	"forwardUrl": ""
 }

@@ -1,10 +1,9 @@
 {
 	"statusCode": "200",
 	"message": "操作成功。",
-	"closeNavTab": [],
-	"closeDialog": [],
-	"reloadNavTab": [],
-	"reloadDialog": [],
-	"reloadNavTabDiv": ["pdiv,home.html,x=1&y=a"],
-	"reloadDialogDiv": ["pdiv,home.html,x=1&y=a","xdiv,login-dialog.html"]
+	"closeNavTab": ["current", "rel-x", "rel-y"],
+	"closeDialog": ["current", "rel-x", "rel-y"],
+	"reloadNavTab": ["current,c.html,p=1&c=a", "rel-x,x.html", "rel-y"],
+	"reloadDialog": ["current,c.html,p=1&c=a", "rel-x,x.html", "rel-y"],
+	"reloadDiv": ["div_p,d.html,x=1&y=a", "div_d,d.html", "div_x"]
 }

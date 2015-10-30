@@ -42,6 +42,7 @@ function validateCallback(form, callback, confirmMsg) {
 
 	return false;
 }
+
 /**
  * 带文件上传的ajax表单提交
  * 
@@ -111,35 +112,15 @@ function _iframeResponse(iframe, callback) {
 	});
 }
 
-/**
- * navTabAjaxDone是DWZ框架中预定义的表单提交回调函数． 服务器转回navTabId可以把那个navTab标记为reloadFlag=1, 下次切换到那个navTab时会重新载入内容. callbackType如果是closeCurrent就会关闭当前tab 只有callbackType="forward"时需要forwardUrl值 navTabAjaxDone这个回调函数基本可以通用了，如果还有特殊需要也可以自定义回调函数. 如果表单提交只提示操作是否成功, 就可以不指定回调函数. 框架会默认调用DWZ.ajaxDone() <form
- * action="/user.do?method=save" onsubmit="return validateCallback(this, navTabAjaxDone)">
- * 
- * form提交后返回json数据结构statusCode=DWZ.statusCode.ok表示操作成功, 做页面跳转等操作. statusCode=DWZ.statusCode.error表示操作失败, 提示错误原因. statusCode=DWZ.statusCode.timeout表示session超时，下次点击时跳转到DWZ.loginUrl {"statusCode":"200", "message":"操作成功", "navTabId":"navNewsLi", "forwardUrl":"", "callbackType":"closeCurrent",
- * "rel"."xxxId"} {"statusCode":"300", "message":"操作失败"} {"statusCode":"301", "message":"会话超时"}
- * 
- */
-function navTabAjaxDone(json) {
+/** 统一回调处理函数 */
+function allAjaxDone(json) {
 	DWZ.ajaxDone(json);
 	if(json[DWZ.keys.statusCode] == DWZ.statusCode.ok) {
 		_closeNavTab(json);
 		_closeDialog(json);
 		_reloadNavTab(json);
 		_reloadDialog(json);
-		_reloadNavTabDiv(json);
-		_reloadDialogDiv(json)
-	}
-}
-
-function ajaxDone(json) {
-	DWZ.ajaxDone(json);
-	if(json[DWZ.keys.statusCode] == DWZ.statusCode.ok) {
-		_closeNavTab(json);
-		_closeDialog(json);
-		_reloadNavTab(json);
-		_reloadDialog(json);
-		_reloadNavTabDiv(json);
-		_reloadDialogDiv(json)
+		_reloadDiv(json);
 	}
 }
 
@@ -189,24 +170,15 @@ function _reloadDialog(json) {
 	}
 }
 
-function _reloadNavTabDiv(json) {
-	_reloadDiv("navTab", json);
-}
-
-function _reloadDialogDiv(json) {
-	_reloadDiv("dialog", json);
-}
-
-function _reloadDiv(targetType, json) {
-	var divs = targetType == "dialog" ? _parseToResults(json.reloadDialogDiv) : _parseToResults(json.reloadNavTabDiv);
-	var $parent = targetType == "dialog" ? $.pdialog.getCurrent() : navTab.getCurrentPanel();
+function _reloadDiv(json) {
+	var divs = _parseToResults(json.reloadDiv);
 	for(var i = 0; i < divs.length; i++) {
 		var reloadOptions = {
 			data: divs[i].data || {},
 			callback: divs[i].callback
 		};
-		var $box = $parent.find("#" + divs[i].id);
-		var $pagerForm = $("#pagerForm", $box);
+		var $box = _getDivInCurrent("#" + divs[i].id);
+		var $pagerForm = $("#pagerForm", $box.unitBox());
 		if($pagerForm.size() > 0) {
 			$pagerForm = $pagerForm.eq(0);
 		} else {
@@ -234,270 +206,66 @@ function _reloadDiv(targetType, json) {
 	}
 }
 
+function _getDivInCurrent(divId) {
+	// 如果当前有打开dialog，先从当前dialog中查找
+	if($.pdialog.getCurrent()) {
+		var div = $("#" + divId, $.pdialog.getCurrent());
+		if(div.length > 0) {
+			return div;
+		}
+	}
+	// 如果当前dialog中未找到，则从当前navTab中查找
+	var div = $("#" + divId, navTab.getCurrentPanel());
+	if(div.length > 0) {
+		return div;
+	}
+	throw new Error("当前页面未找到[id=" + divId + "的元素。" );
+}
+
 function _parseToResults(arrays) {
 	var results = [];
-	for(var i = 0; i < arrays.length; i++) {
-		var attrs = arrays[i].split(",");
-		var result = {
-			id: attrs[0],
-			url: attrs[1] || null,
-			data: attrs[2] ? attrs[2].toJson() : null,
-			callback: attrs[3] || null
+	if(arrays) {
+		for(var i = 0; i < arrays.length; i++) {
+			var attrs = arrays[i].split(",");
+			var result = {
+				id: attrs[0],
+				url: attrs[1] || null,
+				data: attrs[2] ? attrs[2].toJson() : null,
+				callback: attrs[3] || null
+			}
+			results.push(result);
 		}
-		results.push(result);
 	}
 	return results;
 }
 
-function dialogReload(json) {
-	DWZ.ajaxDone(json);
-	if(json.statusCode == DWZ.statusCode.ok) {
-		if(json.dialogId) {
-			reloadDialog(json.dialogId);
-		} else {
-			reloadDialog($.pdialog._current);
-		}
-	}
-}
-
-/** 重新加载指定的dialog */
-var reloadDialog = function(dialog) {
-	if(typeof dialog == 'string') {
-		dialog = $("body").data(dialog);
-	}
-	if(dialog) {
-		$.pdialog.reload(dialog.data("url"), {
-			dialogId: dialog.data("id")
-		});
-	}
-}
-
-/** 覆盖原dialogAjaxDone函数 */
-function dialogAjaxDone(json) {
-	DWZ.ajaxDone(json);
-	if(json.statusCode == DWZ.statusCode.ok) {
-		if(json.navTabId && json.forwardUrl) {
-			navTab.reload(json.forwardUrl, {
-				navTabId: json.navTabId
-			});
-		} else if(!json.navTabId && json.forwardUrl) {
-			navTab.reload(json.forwardUrl);
-		} else if(json.navTabId && !json.forwardUrl) {
-			navTab.reloadFlag(json.navTabId);
-		} else {
-			var $pagerForm = $("#pagerForm", navTab.getCurrentPanel());
-			var args = $pagerForm.size() > 0 ? $pagerForm.serializeArray() : {}
-			navTabPageBreak(args, json.rel);
-		}
-		if("closeCurrent" == json.callbackType) {
-			$.pdialog.closeCurrent();
-		}
-	}
-}
-
-/** 表单提交后刷新指定dialog的回调函数 */
-var dialogReloadDone = function(json) {
-	DWZ.ajaxDone(json);
-	if(json.statusCode == DWZ.statusCode.ok) {
-		if(json.rel) {
-			reloadDialog(json.rel);
-		} else {
-			reloadDialog($.pdialog._current);
-		}
-		if("closeCurrent" == json.callbackType) {
-			$.pdialog.closeCurrent();
-		}
-	}
-}
-
-/** 表单提交后关闭指定dialog的回调函数 */
-var dialogCloseDone = function(json) {
-	DWZ.ajaxDone(json);
-	if(json.statusCode == DWZ.statusCode.ok) {
-		if("closeCurrent" == json.callbackType) {
-			$.pdialog.closeCurrent();
-		}
-		if(json.rel) {
-			$.pdialog.close(json.rel);
-		}
-		if(json.navTabId && json.forwardUrl) {
-			navTab.reload(json.forwardUrl, {
-				navTabId: json.navTabId
-			});
-		} else if(!json.navTabId && json.forwardUrl) {
-			navTab.reload(json.forwardUrl);
-		} else if(json.navTabId && !json.forwardUrl) {
-			navTab.reloadFlag(json.navTabId);
-		} else {
-			var $pagerForm = $("#pagerForm", navTab.getCurrentPanel());
-			var args = $pagerForm.size() > 0 ? $pagerForm.serializeArray() : {}
-			navTabPageBreak(args);
-		}
-	}
-}
-
-/**
- * 处理navTab上的查询, 会重新载入当前navTab
- * 
- * @param {Object}
- *            form
- */
-function navTabSearch(form, navTabId) {
-	var $form = $(form);
-	if(form[DWZ.pageInfo.pageNum])
-		form[DWZ.pageInfo.pageNum].value = 1;
-	navTab.reload($form.attr('action'), {
-		data: $form.serializeArray(),
-		navTabId: navTabId
+function navTabSearch() {
+	_reloadNavTab({
+		"reloadNavTab": [
+			"current"
+		]
 	});
 	return false;
 }
-/**
- * 处理dialog弹出层上的查询, 会重新载入当前dialog
- * 
- * @param {Object}
- *            form
- */
-function dialogSearch(form) {
-	var $form = $(form);
-	if(form[DWZ.pageInfo.pageNum])
-		form[DWZ.pageInfo.pageNum].value = 1;
-	$.pdialog.reload($form.attr('action'), {
-		data: $form.serializeArray()
+
+function dialogSearch() {
+	_reloadDialog({
+		"reloadDialog": [
+			"current"
+		]
 	});
 	return false;
 }
-function dwzSearch(form, targetType) {
-	if(targetType == "dialog")
-		dialogSearch(form);
-	else
-		navTabSearch(form);
-	return false;
-}
-/**
- * 处理div上的局部查询, 会重新载入指定div
- * 
- * @param {Object}
- *            form
- */
-function divSearch(form, rel) {
-	var $form = $(form);
-	if(form[DWZ.pageInfo.pageNum])
-		form[DWZ.pageInfo.pageNum].value = 1;
-	if(rel) {
-		var $box = $("#" + rel);
-		$box.ajaxUrl({
-			type: "POST",
-			url: $form.attr("action"),
-			data: $form.serializeArray(),
-			callback: function() {
-				$box.find("[layoutH]").layoutH();
-			}
-		});
-	}
-	return false;
-}
-/**
- * 
- * @param {Object}
- *            args {pageNum:"",numPerPage:"",orderField:"",orderDirection:""}
- * @param String
- *            formId 分页表单选择器，非必填项默认值是 "pagerForm"
- */
-function _getPagerForm($parent, args) {
-	var form = $("#pagerForm", $parent).get(0);
 
-	if(form) {
-		if(args["pageNum"])
-			form[DWZ.pageInfo.pageNum].value = args["pageNum"];
-		if(args["numPerPage"])
-			form[DWZ.pageInfo.numPerPage].value = args["numPerPage"];
-		if(args["orderField"])
-			form[DWZ.pageInfo.orderField].value = args["orderField"];
-		if(args["orderDirection"] && form[DWZ.pageInfo.orderDirection])
-			form[DWZ.pageInfo.orderDirection].value = args["orderDirection"];
-	}
-
-	return form;
-}
-
-/**
- * 处理navTab中的分页和排序 targetType: navTab 或 dialog rel: 可选 用于局部刷新div id号 data: pagerForm参数 {pageNum:"n", numPerPage:"n", orderField:"xxx", orderDirection:""} callback: 加载完成回调函数
- */
-function dwzPageBreak(options) {
-	var op = $.extend({
-		targetType: "navTab",
-		rel: "",
-		data: {
-			pageNum: "",
-			numPerPage: "",
-			orderField: "",
-			orderDirection: ""
-		},
-		callback: null
-	}, options);
-	var $parent = op.targetType == "dialog" ? $.pdialog.getCurrent() : navTab.getCurrentPanel();
-
-	if(op.rel) {
-		var $box = $parent.find("#" + op.rel);
-		var form = _getPagerForm($box, op.data);
-		if(form) {
-			$box.ajaxUrl({
-				type: "POST",
-				url: $(form).attr("action"),
-				data: $(form).serializeArray(),
-				callback: function() {
-					$box.find("[layoutH]").layoutH();
-				}
-			});
-		}
-	} else {
-		var form = _getPagerForm($parent, op.data);
-		var params = $(form).serializeArray();
-
-		if(op.targetType == "dialog") {
-			if(form)
-				$.pdialog.reload($(form).attr("action"), {
-					data: params,
-					callback: op.callback
-				});
-		} else {
-			if(form)
-				navTab.reload($(form).attr("action"), {
-					data: params,
-					callback: op.callback
-				});
-		}
-	}
-}
-/**
- * 处理navTab中的分页和排序
- * 
- * @param args
- *            {pageNum:"n", numPerPage:"n", orderField:"xxx", orderDirection:""}
- * @param rel：
- *            可选 用于局部刷新div id号
- */
-function navTabPageBreak(args, rel) {
-	dwzPageBreak({
-		targetType: "navTab",
-		rel: rel,
-		data: args
+function divSearch(rel) {
+	_reloadDiv({
+		"reloadDiv": [rel]
 	});
-}
-/**
- * 处理dialog中的分页和排序 参数同 navTabPageBreak
- */
-function dialogPageBreak(args, rel) {
-	dwzPageBreak({
-		targetType: "dialog",
-		rel: rel,
-		data: args
-	});
+	return false;
 }
 
 function ajaxTodo(url, callback) {
-	var $callback = callback || navTabAjaxDone;
+	var $callback = callback || allAjaxDone;
 	if(!$.isFunction($callback))
 		$callback = eval('(' + callback + ')');
 	$.ajax({
@@ -606,7 +374,7 @@ $.fn.extend({
 					return false;
 				}
 
-				var _callback = $this.attr("callback") || (targetType == "dialog" ? dialogAjaxDone : navTabAjaxDone);
+				var _callback = $this.attr("callback") || allAjaxDone;
 				if(!$.isFunction(_callback))
 					_callback = eval('(' + _callback + ')');
 
@@ -652,11 +420,6 @@ $.fn.extend({
 			var $form = $("#pagerForm", $p);
 			var url = $this.attr("href");
 			window.location = url + (url.indexOf('?') == -1 ? "?" : "&") + $form.serialize();
-			// var $iframe = $("#callbackframe");
-			// if($iframe.size() == 0) {
-			// $iframe = $("<iframe id='callbackframe' name='callbackframe' src='about:blank' style='display:none'></iframe>").appendTo("body");
-			// }
-			// $form.target = "callbackframe";
 		}
 
 		return this.each(function() {
