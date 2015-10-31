@@ -34,22 +34,22 @@
 
 				if(pc.hasPrev()) {
 					$first.add($prev).find(">span").hide();
-					_bindEvent($prev, pc.getCurrentPage() - 1, pc.targetType(), pc.rel());
-					_bindEvent($first, 1, pc.targetType(), pc.rel());
+					_bindEvent($prev, pc.getCurrentPage() - 1);
+					_bindEvent($first, 1);
 				} else {
 					$first.add($prev).addClass("disabled").find(">a").hide();
 				}
 
 				if(pc.hasNext()) {
 					$next.add($last).find(">span").hide();
-					_bindEvent($next, pc.getCurrentPage() + 1, pc.targetType(), pc.rel());
-					_bindEvent($last, pc.numPages(), pc.targetType(), pc.rel());
+					_bindEvent($next, pc.getCurrentPage() + 1);
+					_bindEvent($last, pc.numPages());
 				} else {
 					$next.add($last).addClass("disabled").find(">a").hide();
 				}
 
 				$this.find(setting.nums$).each(function(i) {
-					_bindEvent($(this), i + interval.start, pc.targetType(), pc.rel());
+					_bindEvent($(this), i + interval.start);
 				});
 				$this.find(setting.jumpto$).each(function() {
 					var $this = $(this);
@@ -58,13 +58,9 @@
 					$button.click(function(event) {
 						var pageNum = $inputBox.val();
 						if(pageNum && pageNum.isPositiveInteger()) {
-							dwzPageBreak({
-								targetType: pc.targetType(),
-								rel: pc.rel(),
-								data: {
-									pageNum: pageNum
-								}
-							});
+							var form = $this.getPagerForm().get(0);
+							form[DWZ.pageInfo.pageNum].value = pageNum;
+							ajaxSearch(form);
 						}
 					});
 					$inputBox.keyup(function(event) {
@@ -74,17 +70,13 @@
 				});
 			});
 
-			function _bindEvent($target, pageNum, targetType, rel) {
+			function _bindEvent($target, pageNum) {
 				$target.bind("click", {
 					pageNum: pageNum
 				}, function(event) {
-					dwzPageBreak({
-						targetType: targetType,
-						rel: rel,
-						data: {
-							pageNum: event.data.pageNum
-						}
-					});
+					var form = $(this).getPagerForm().get(0);
+					form[DWZ.pageInfo.pageNum].value = event.data.pageNum;
+					ajaxSearch(form);
 					event.preventDefault();
 				});
 			}
@@ -92,8 +84,6 @@
 
 		orderBy: function(options) {
 			var op = $.extend({
-				targetType: "navTab",
-				rel: "",
 				asc: "asc",
 				desc: "desc"
 			}, options);
@@ -101,38 +91,13 @@
 				var $this = $(this).css({
 					cursor: "pointer"
 				}).click(function() {
-					var orderField = $this.attr("orderField");
+					var orderField = $this.attr(DWZ.pageInfo.orderField);
 					var orderDirection = $this.hasClass(op.asc) ? op.desc : op.asc;
-					dwzPageBreak({
-						targetType: op.targetType,
-						rel: op.rel,
-						data: {
-							orderField: orderField,
-							orderDirection: orderDirection
-						}
-					});
-				});
-
-			});
-		},
-		pagerForm: function(options) {
-			var op = $.extend({
-				pagerForm$: "#pagerForm",
-				parentBox: document
-			}, options);
-			var frag = '<input type="hidden" name="#name#" value="#value#" />';
-			return this.each(function() {
-				var $searchForm = $(this), $pagerForm = $(op.pagerForm$, op.parentBox);
-				var actionUrl = $pagerForm.attr("action").replaceAll("#rel#", $searchForm.attr("action"));
-				$pagerForm.attr("action", actionUrl);
-				$searchForm.find(":input").each(function() {
-					var $input = $(this), name = $input.attr("name");
-					if(name && (!$input.is(":checkbox,:radio") || $input.is(":checked"))) {
-						if($pagerForm.find(":input[name='" + name + "']").length == 0) {
-							var inputFrag = frag.replaceAll("#name#", name).replaceAll("#value#", $input.val());
-							$pagerForm.append(inputFrag);
-						}
-					}
+					
+					var form = $this.getPagerForm().get(0);
+					form[DWZ.pageInfo.orderField].value = orderField;
+					form[DWZ.pageInfo.orderDirection].value = orderDirection;
+					ajaxSearch(form);
 				});
 			});
 		}
@@ -140,8 +105,6 @@
 
 	var Pagination = function(opts) {
 		this.opts = $.extend({
-			targetType: "navTab", // navTab, dialog
-			rel: "", // 用于局部刷新div id号
 			totalCount: 0,
 			numPerPage: 10,
 			pageNumShown: 10,
@@ -153,12 +116,6 @@
 	}
 
 	$.extend(Pagination.prototype, {
-		targetType: function() {
-			return this.opts.targetType
-		},
-		rel: function() {
-			return this.opts.rel
-		},
 		numPages: function() {
 			return Math.ceil(this.opts.totalCount / this.opts.numPerPage);
 		},

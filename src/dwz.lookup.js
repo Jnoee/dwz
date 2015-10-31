@@ -20,7 +20,7 @@
 
 	$.extend({
 		lookupBack: function(args) {
-			var $box = _lookup['$target'].parents(".unitBox:first");
+			var $box = _lookup['$target'].unitBox();
 			$box.find(":input").each(function() {
 				var $input = $(this), inputName = $input.attr("name");
 
@@ -58,7 +58,7 @@
 						pk: $this.attr("lookupPk") || "id"
 					});
 
-					var url = unescape($this.attr("href")).replaceTmById($(event.target).parents(".unitBox:first"));
+					var url = unescape($this.attr("href")).replaceTmById($(event.target).unitBox());
 					if(!url.isFinishedTm()) {
 						alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
 						return false;
@@ -73,7 +73,7 @@
 			return this.each(function() {
 				var $this = $(this), args = {};
 				$this.click(function(event) {
-					var $unitBox = $this.parents(".unitBox:first");
+					var $unitBox = $this.unitBox();
 					$unitBox.find("[name='" + $this.attr("multLookup") + "']").filter(":checked").each(function() {
 						var _args = DWZ.jsonEval($(this).val());
 						for( var key in _args) {

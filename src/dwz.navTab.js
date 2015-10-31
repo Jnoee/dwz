@@ -330,10 +330,8 @@ var navTab = {
 			if($tab.hasClass("external")) {
 				navTab.openExternal(url, $panel);
 			} else {
-				// 获取pagerForm参数
-				var $pagerForm = $("#pagerForm", $panel);
-				var args = $pagerForm.size() > 0 ? $pagerForm.eq(0).serializeArray() : {}
-
+				var $pagerForm = $panel.getPagerForm();
+				var args = $pagerForm ? $pagerForm.serializeArray() : {};
 				$panel.loadUrl(url, args, function() {
 					navTab._loadUrlCallback($panel);
 				});
@@ -359,23 +357,14 @@ var navTab = {
 		var $panel = op.navTabId ? this.getPanel(op.navTabId) : this._getPanels().eq(this._currentIndex);
 
 		if($panel) {
-			if(!url) {
-				url = $tab.attr("url");
-			}
+			url = url || $tab.attr("url");
 			if(url) {
 				if($tab.hasClass("external")) {
 					navTab.openExternal(url, $panel);
 				} else {
-					var $pagerForm = $("#pagerForm", $panel);
-					if($pagerForm.size() > 0) {
-						$pagerForm = $pagerForm.eq(0);
-					} else {
-						$pagerForm = null;
-					}
-					
-					var serializeArray = $pagerForm ? $pagerForm.serializeArray() : {};
-					if(!$.isEmptyObject(serializeArray)) {
-						$.extend(op.data, $.serializeArrayToJson(serializeArray));
+					var $pagerForm = $panel.getPagerForm();
+					if($pagerForm) {
+						$.extend(op.data, $pagerForm.serializeJson());
 					}
 					$.extend(op.data, url.getParams());
 

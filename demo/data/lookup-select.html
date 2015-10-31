@@ -1,12 +1,14 @@
 <div class="pageHeader">
-	<form id="pagerForm" method="post" action="data/lookup-select.html" onsubmit="return dwzSearch(this, 'dialog');">
-		<input type="hidden" name="pageNum" value="1" /> <input type="hidden" name="numPerPage" value="20" /> <input type="hidden" name="orderField" value="" /> <input type="hidden" name="orderDirection" value="" />
+	<form action="data/lookup-select.html" class="pagerForm">
+		<input type="hidden" name="pageNum" value="1" />
+		<input type="hidden" name="numPerPage" value="20" />
+		<input type="hidden" name="orderField" value="" />
+		<input type="hidden" name="orderDirection" value="" />
 		<div class="searchBar">
 			<div class="subBar">
 				<ul>
 					<li><label>部门名称:</label> <input class="textInput" name="orgName" value="" type="text"></li>
 					<li><label>部门编号:</label> <input class="textInput" name="orgNum" value="" type="text"></li>
-					<li><label>部门经理:</label> <input class="textInput" name="leader" value="" type="text"></li>
 					<li><div class="buttonActive">
 							<div class="buttonContent">
 								<button type="submit">查询</button>
@@ -18,7 +20,7 @@
 	</form>
 </div>
 <div class="pageContent">
-	<table class="table" layoutH="85" targetType="dialog" width="100%">
+	<table class="table" layoutH="87" width="100%">
 		<thead>
 			<tr>
 				<th orderField="orgName">部门名称</th>
@@ -47,15 +49,13 @@
 	</table>
 	<div class="panelBar">
 		<div class="pages">
-			<span>每页</span>
-			<select name="numPerPage" onchange="dwzPageBreak({targetType:'dialog', numPerPage:'20'})">
+			<span>每页</span> <select class="combox">
 				<option value="20" selected="selected">20</option>
 				<option value="30">30</option>
 				<option value="50">50</option>
 				<option value="100">100</option>
-			</select>
-			<span>条，共2条</span>
+			</select> <span>条，共2条</span>
 		</div>
-		<div class="pagination" targetType="dialog" totalCount="2" numPerPage="20" pageNumShown="1" currentPage="1"></div>
+		<div class="pagination" totalCount="2" numPerPage="20" pageNumShown="1" currentPage="1"></div>
 	</div>
 </div>

@@ -20,7 +20,7 @@
 	
 	$.extend({
 		suggestBack: function(args) {
-			var $box = _lookup['$target'].parents(".unitBox:first");
+			var $box = _lookup['$target'].unitBox();
 			$box.find(":input").each(function() {
 				var $input = $(this), inputName = $input.attr("name");
 
@@ -70,7 +70,7 @@
 						pk: $input.attr("lookupPk") || "id"
 					});
 
-					var url = unescape($input.attr("suggestUrl")).replaceTmById($(event.target).parents(".unitBox:first"));
+					var url = unescape($input.attr("suggestUrl")).replaceTmById($(event.target).unitBox());
 					if(!url.isFinishedTm()) {
 						alertMsg.error($input.attr("warn") || DWZ.msg("alertSelectMsg"));
 						return false;

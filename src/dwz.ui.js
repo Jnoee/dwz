@@ -66,14 +66,8 @@ function initUI(_box) {
 	var $p = $(_box || document);
 
 	$("div.panel", $p).jPanel();
-
-	// tables
 	$("table.table", $p).jTable();
-
-	// css tables
 	$('table.list', $p).cssTable();
-
-	// auto bind tabs
 	$("div.tabs", $p).each(function() {
 		var $this = $(this);
 		var options = {};
@@ -81,7 +75,6 @@ function initUI(_box) {
 		options.eventType = $this.attr("eventType") || "click";
 		$this.tabs(options);
 	});
-
 	$("ul.tree", $p).jTree();
 	$('div.accordion', $p).each(function() {
 		var $this = $(this);
@@ -91,85 +84,67 @@ function initUI(_box) {
 			active: 0
 		});
 	});
-
 	$(":button.checkboxCtrl, :checkbox.checkboxCtrl", $p).checkboxCtrl($p);
+	$("select.combox", $p).combox();
+	$("textarea.editor", $p).each(function() {
+		var $this = $(this);
+		var op = {
+			html5Upload: false,
+			skin: 'vista',
+			tools: $this.attr("tools") || 'full'
+		};
+		var upAttrs = [
+				[
+						"upLinkUrl", "upLinkExt", "zip,rar,txt"
+				], [
+						"upImgUrl", "upImgExt", "jpg,jpeg,gif,png"
+				], [
+						"upFlashUrl", "upFlashExt", "swf"
+				], [
+						"upMediaUrl", "upMediaExt", "avi"
+				]
+		];
 
-	if($.fn.combox)
-		$("select.combox", $p).combox();
+		$(upAttrs).each(function(i) {
+			var urlAttr = upAttrs[i][0];
+			var extAttr = upAttrs[i][1];
 
-	if($.fn.xheditor) {
-		$("textarea.editor", $p).each(function() {
-			var $this = $(this);
-			var op = {
-				html5Upload: false,
-				skin: 'vista',
-				tools: $this.attr("tools") || 'full'
-			};
-			var upAttrs = [
-					[
-							"upLinkUrl", "upLinkExt", "zip,rar,txt"
-					], [
-							"upImgUrl", "upImgExt", "jpg,jpeg,gif,png"
-					], [
-							"upFlashUrl", "upFlashExt", "swf"
-					], [
-							"upMediaUrl", "upMediaExt", "avi"
-					]
-			];
-
-			$(upAttrs).each(function(i) {
-				var urlAttr = upAttrs[i][0];
-				var extAttr = upAttrs[i][1];
-
-				if($this.attr(urlAttr)) {
-					op[urlAttr] = $this.attr(urlAttr);
-					op[extAttr] = $this.attr(extAttr) || upAttrs[i][2];
-				}
-			});
-
-			$this.xheditor(op);
+			if($this.attr(urlAttr)) {
+				op[urlAttr] = $this.attr(urlAttr);
+				op[extAttr] = $this.attr(extAttr) || upAttrs[i][2];
+			}
 		});
-	}
 
-	if($.fn.uploadify) {
-		$(":file[uploaderOption]", $p).each(function() {
-			var $this = $(this);
-			var options = {
-				fileObjName: $this.attr("name") || "file",
-				auto: true,
-				multi: true,
-				onUploadError: uploadifyError
-			};
+		$this.xheditor(op);
+	});
 
-			var uploaderOption = DWZ.jsonEval($this.attr("uploaderOption"));
-			$.extend(options, uploaderOption);
+	$(":file[uploaderOption]", $p).each(function() {
+		var $this = $(this);
+		var options = {
+			fileObjName: $this.attr("name") || "file",
+			auto: true,
+			multi: true,
+			onUploadError: uploadifyError
+		};
 
-			DWZ.debug("uploaderOption: " + DWZ.obj2str(uploaderOption));
+		var uploaderOption = DWZ.jsonEval($this.attr("uploaderOption"));
+		$.extend(options, uploaderOption);
 
-			$this.uploadify(options);
-		});
-	}
+		DWZ.debug("uploaderOption: " + DWZ.obj2str(uploaderOption));
 
-	// init styles
+		$this.uploadify(options);
+	});
+
 	$("input[type=text], input[type=password], textarea", $p).addClass("textInput").focusClass("focus");
-
 	$("input[readonly], textarea[readonly]", $p).addClass("readonly");
 	$("input[disabled=true], textarea[disabled=true]", $p).addClass("disabled");
-
 	$("input[type=text]", $p).not("div.tabs input[type=text]", $p).filter("[alt]").inputAlert();
-
-	// Grid ToolBar
 	$("div.panelBar li, div.panelBar", $p).hoverClass("hover");
-
-	// Button
 	$("div.button", $p).hoverClass("buttonHover");
 	$("div.buttonActive", $p).hoverClass("buttonActiveHover");
-
-	// tabsPageHeader
 	$("div.tabsHeader li, div.tabsPageHeader li, div.accordionHeader, div.accordion", $p).hoverClass("hover");
 
-	// validate form
-	$("form.required-validate", $p).each(function() {
+	$("form.validateForm", $p).each(function() {
 		var $form = $(this);
 		$form.validate({
 			onsubmit: false,
@@ -194,6 +169,20 @@ function initUI(_box) {
 				customvalid: $input.attr("customvalid")
 			})
 		});
+
+		if(!$form.attr("onsubmit")) {
+			$form.attr("onsubmit", "return validateCallback(this, allAjaxDone)");
+		}
+		$form.attr("method", "post");
+	});
+
+	$("form.pagerForm", $p).each(function() {
+		var $form = $(this);
+		
+		if(!$form.attr("onsubmit")) {
+			$form.attr("onsubmit", "return ajaxSearch(this)");
+		}
+		$form.attr("method", "post");
 	});
 
 	if($.fn.datepicker) {
@@ -214,7 +203,6 @@ function initUI(_box) {
 		});
 	}
 
-	// navTab
 	$("a[target=navTab]", $p).each(function() {
 		$(this).click(function(event) {
 			var $this = $(this);
@@ -222,7 +210,7 @@ function initUI(_box) {
 			var tabid = $this.attr("rel") || "_blank";
 			var fresh = eval($this.attr("fresh") || "true");
 			var external = eval($this.attr("external") || "false");
-			var url = unescape($this.attr("href")).replaceTmById($(event.target).parents(".unitBox:first"));
+			var url = unescape($this.attr("href")).replaceTmById($(event.target).unitBox());
 			DWZ.debug(url);
 			if(!url.isFinishedTm()) {
 				alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
@@ -238,7 +226,6 @@ function initUI(_box) {
 		});
 	});
 
-	// dialogs
 	$("a[target=dialog]", $p).each(function() {
 		$(this).click(function(event) {
 			var $this = $(this);
@@ -250,16 +237,16 @@ function initUI(_box) {
 			options.width = DWZ.dialogWidth[w] || w;
 			options.height = DWZ.dialogHeight[h] || h;
 			options.max = eval($this.attr("max") || "false");
-			options.mask = eval($this.attr("mask") || "false");
-			options.maxable = eval($this.attr("maxable") || "true");
-			options.minable = eval($this.attr("minable") || "true");
+			options.mask = eval($this.attr("mask") || "true");
+			options.maxable = eval($this.attr("maxable") || "false");
+			options.minable = eval($this.attr("minable") || "false");
 			options.fresh = eval($this.attr("fresh") || "true");
-			options.resizable = eval($this.attr("resizable") || "true");
+			options.resizable = eval($this.attr("resizable") || "false");
 			options.drawable = eval($this.attr("drawable") || "true");
 			options.close = eval($this.attr("close") || "");
 			options.param = $this.attr("param") || "";
 
-			var url = unescape($this.attr("href")).replaceTmById($(event.target).parents(".unitBox:first"));
+			var url = unescape($this.attr("href")).replaceTmById($(event.target).unitBox());
 			DWZ.debug(url);
 			if(!url.isFinishedTm()) {
 				alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
@@ -270,6 +257,7 @@ function initUI(_box) {
 			return false;
 		});
 	});
+
 	$("a[target=ajax]", $p).each(function() {
 		$(this).click(function(event) {
 			var $this = $(this);
@@ -288,38 +276,31 @@ function initUI(_box) {
 	$("div.pagination", $p).each(function() {
 		var $this = $(this);
 		$this.pagination({
-			targetType: $this.attr("targetType"),
-			rel: $this.attr("rel"),
 			totalCount: $this.attr("totalCount"),
 			numPerPage: $this.attr("numPerPage"),
 			pageNumShown: $this.attr("pageNumShown"),
 			currentPage: $this.attr("currentPage")
 		});
 	});
-
-	if($.fn.sortDrag)
-		$("div.sortDrag", $p).sortDrag();
-
-	// dwz.ajax.js
-	if($.fn.ajaxTodo)
-		$("a[target=ajaxTodo]", $p).ajaxTodo();
-	if($.fn.dwzExport)
-		$("a[target=dwzExport]", $p).dwzExport();
-
-	if($.fn.lookup)
-		$("a[lookupGroup]", $p).lookup();
-	if($.fn.multLookup)
-		$("[multLookup]:button", $p).multLookup();
-	if($.fn.suggest)
-		$("input[suggestFields]", $p).suggest();
-	if($.fn.masterSlave)
-		$("table.masterSlave", $p).masterSlave();
-	if($.fn.selectedTodo)
-		$("a[target=selectedTodo]", $p).selectedTodo();
-	if($.fn.pagerForm)
-		$("form[rel=pagerForm]", $p).pagerForm({
-			parentBox: $p
+	
+	$("div.pages select", $p).each(function() {
+		$(this).change(function() {
+			var form = $(this).getPagerForm().get(0);
+			form[DWZ.pageInfo.numPerPage].value = this.value;
+			ajaxSearch(form);
 		});
+	});
+
+	$("div.sortDrag", $p).sortDrag();
+
+	$("a[target=ajaxTodo]", $p).ajaxTodo();
+	$("a[target=dwzExport]", $p).dwzExport();
+
+	$("a[lookupGroup]", $p).lookup();
+	$("[multLookup]:button", $p).multLookup();
+	$("input[suggestFields]", $p).suggest();
+	$("table.masterSlave", $p).masterSlave();
+	$("a[target=selectedTodo]", $p).selectedTodo();
 
 	// 处理awesome字体图标
 	$("[class*=fa-]:not(i)").each(function() {
@@ -338,7 +319,7 @@ function initUI(_box) {
 		}
 		$(this).prepend(i);
 	});
-	
+
 	if($.fn.viewSource) {
 		$("a.viewsource", $p).viewSource();
 	}

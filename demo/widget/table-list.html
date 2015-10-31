@@ -1,6 +1,6 @@
 <meta charset="UTF-8" />
 <div class="pageHeader">
-	<form id="pagerForm" action="widget/table-list.html" method="post" onsubmit="return navTabSearch();">
+	<form action="widget/table-list.html" class="pagerForm" onsubmit="return navTabSearch();">
 		<input type="hidden" name="pageNum" value="1" />
 		<input type="hidden" name="numPerPage" value="20" />
 		<input type="hidden" name="orderField" value="customerNo" />
@@ -37,7 +37,7 @@
 			<li><a href="data/table-add.html?uid={sid_user}" target="dialog" mask="true" warn="请选择一个用户" title="编辑客户"><span class="fa-edit">编辑</span></a></li>
 			<li><a href="result/navtab-reload.json?uid={sid_user}" target="ajaxTodo" title="确定要删除吗?"><span class="fa-minus">删除</span></a></li>
 			<li class="line">line</li>
-			<li><a href="common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span class="fa-download">导出EXCEL</span></a></li>
+			<li><a href="data/dwz-team.xls" target="dwzExport" title="确实要导出这些记录吗?"><span class="fa-download">导出EXCEL</span></a></li>
 			<li class="line">line</li>
 			<li><a href="javascript:$.printBox('print_table')"><span class="fa-print">打印</span></a></li>
 			<li class="line">line</li>
@@ -45,7 +45,7 @@
 		</ul>
 	</div>
 	<div id="print_table">
-		<table class="list" width="98%" targetType="navTab" asc="asc" desc="desc" layoutH="116">
+		<table class="list" width="98%" asc="asc" desc="desc" layoutH="115">
 			<thead>
 				<tr>
 					<th colspan="2">客户信息</th>
@@ -293,13 +293,13 @@
 	</div>
 	<div class="panelBar">
 		<div class="pages">
-			<span>显示</span> <select name="numPerPage" onchange="navTabPageBreak({numPerPage:this.value})">
+			<span>显示</span> <select class="combox">
 				<option value="20">20</option>
 				<option value="50">50</option>
 				<option value="100">100</option>
 				<option value="200">200</option>
 			</select> <span>条，共23条</span>
 		</div>
-		<div class="pagination" targetType="navTab" totalCount="200" numPerPage="20" pageNumShown="10" currentPage="1"></div>
+		<div class="pagination" totalCount="200" numPerPage="20" pageNumShown="10" currentPage="1"></div>
 	</div>
 </div>

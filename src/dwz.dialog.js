@@ -10,11 +10,11 @@
 			minW: 50,
 			total: 20,
 			max: false,
-			mask: false,
-			resizable: true,
+			mask: true,
+			resizable: false,
 			drawable: true,
-			maxable: true,
-			minable: true,
+			maxable: false,
+			minable: false,
 			fresh: true
 		},
 		_current: null,
@@ -30,21 +30,14 @@
 			}, options);
 			var dialog = (op.dialogId && $("body").data(op.dialogId)) || this._current;
 			if(dialog) {
+				url = url || dialog.data("url");
 				var jDContent = dialog.find(".dialogContent");
-				
-				var $pagerForm = $("#pagerForm", jDContent);
-				if($pagerForm.size() > 0) {
-					$pagerForm = $pagerForm.eq(0);
-				} else {
-					$pagerForm = null;
-				}
-				
-				var serializeArray = $pagerForm ? $pagerForm.serializeArray() : {};
-				if(!$.isEmptyObject(serializeArray)) {
-					$.extend(op.data, $.serializeArrayToJson(serializeArray));
+				var $pagerForm = jDContent.getPagerForm();
+				if($pagerForm) {
+					$.extend(op.data, $pagerForm.serializeJson());
 				}
 				$.extend(op.data, url.getParams());
-				
+
 				jDContent.ajaxUrl({
 					type: "POST",
 					url: url,

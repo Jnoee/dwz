@@ -33,8 +33,6 @@
 				});
 
 				$this.find("thead [orderField]").orderBy({
-					targetType: $this.attr("targetType"),
-					rel: $this.attr("rel"),
 					asc: $this.attr("asc") || "asc",
 					desc: $this.attr("desc") || "desc"
 				});

@@ -3,23 +3,19 @@
 	<h2 class="contentTitle">
 		建议输入 <a href="widget/suggest.html" class="fa-file-text viewsource" title="查看源文件"></a>
 	</h2>
-	<form action="result/navtab-reload.json" method="post" class="pageForm required-validate" onsubmit="return validateCallback(this, allAjaxDone)">
+	<form action="result/navtab-reload.json" class="validateForm">
 		<div class="pageFormContent" layoutH="87">
 			<dl class="nowrap">
 				<dt>部门名称：</dt>
 				<dd>
-					<input name="org1.id" value="" type="hidden">
-					<input class="required" name="org1.orgName" type="text" suggestFields="orgName" suggestUrl="data/suggest-data.html" lookupGroup="org1" />
-					<span class="unit">（填充隐藏域+文本框）</span>
+					<input name="org1.id" value="" type="hidden"> <input class="required" name="org1.orgName" type="text" suggestFields="orgName" suggestUrl="data/suggest-data.html" lookupGroup="org1" /> <span class="unit">（填充隐藏域+文本框）</span>
 				</dd>
 			</dl>
 			<div class="divider"></div>
 			<dl class="nowrap">
 				<dt>部门名称：</dt>
 				<dd>
-					<input name="org2.id" value="" type="hidden" />
-					<input class="required" name="org2.orgName" type="text" suggestFields="orgNum,orgName" suggestUrl="data/suggest-data.html" lookupGroup="org2" />
-					<span class="unit">（填充隐藏域+多个文本框）</span>
+					<input name="org2.id" value="" type="hidden" /> <input class="required" name="org2.orgName" type="text" suggestFields="orgNum,orgName" suggestUrl="data/suggest-data.html" lookupGroup="org2" /> <span class="unit">（填充隐藏域+多个文本框）</span>
 				</dd>
 			</dl>
 			<dl class="nowrap">
@@ -32,24 +28,19 @@
 			<dl class="nowrap">
 				<dt>部门名称A：</dt>
 				<dd>
-					<input id="inputOrg" name="org3.id" value="" type="hidden" />
-					<input class="required" name="org3.orgName" type="text" postField="orgName" suggestFields="orgNum,orgName" suggestUrl="data/suggest-data.html" lookupGroup="org3" />
-					<span class="unit">（联动限制，必须先填部门A才可以填部门B）</span>
+					<input id="inputOrg" name="org3.id" value="" type="hidden" /> <input class="required" name="org3.orgName" type="text" postField="orgName" suggestFields="orgNum,orgName" suggestUrl="data/suggest-data.html" lookupGroup="org3" /> <span class="unit">（联动限制，必须先填部门A才可以填部门B）</span>
 				</dd>
 			</dl>
 			<dl class="nowrap">
 				<dt>部门编号A：</dt>
 				<dd>
-					<input class="readonly" name="org3.orgNum" readonly="readonly" type="text" />
-					（设定postField属性可以指定提交的参数名）
+					<input class="readonly" name="org3.orgNum" readonly="readonly" type="text" /> （设定postField属性可以指定提交的参数名）
 				</dd>
 			</dl>
 			<dl class="nowrap">
 				<dt>部门名称B：</dt>
 				<dd>
-					<input name="org3b.id" value="" type="hidden" />
-					<input class="required" name="org3b.orgName" type="text" suggestFields="orgNum,orgName" suggestUrl="data/suggest-data.html?orgId={inputOrg}" warn="请先选择部门A" lookupGroup="org3b" />
-					<span class="unit">（suggestUrl中带有{inputOrg}参数表示有关联限定，其中inputOrg为部门A隐藏域的id）</span>
+					<input name="org3b.id" value="" type="hidden" /> <input class="required" name="org3b.orgName" type="text" suggestFields="orgNum,orgName" suggestUrl="data/suggest-data.html?orgId={inputOrg}" warn="请先选择部门A" lookupGroup="org3b" /> <span class="unit">（suggestUrl中带有{inputOrg}参数表示有关联限定，其中inputOrg为部门A隐藏域的id）</span>
 				</dd>
 			</dl>
 		</div>

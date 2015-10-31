@@ -424,16 +424,6 @@ var DWZ = {
 		$.regional[key] = value;
 	};
 
-	$.serializeArrayToJson = function(serializeArray) {
-		var json = {};
-		if(!$.isEmptyObject(serializeArray)) {
-			jQuery.each(serializeArray, function(i, item) {
-				json[item.name] = item.value;
-			});
-		}
-		return json;
-	}
-
 	$.fn.extend({
 		ajaxUrl: function(op) {
 			var $this = $(this);
@@ -585,15 +575,40 @@ var DWZ = {
 			});
 		},
 		viewSource: function() {
-			$(this).each(function(){
+			$(this).each(function() {
 				$(this).click(function(event) {
 					event.preventDefault();
 					window.open("view-source:" + this.href);
-				}); 
+				});
 			});
 		},
 		unitBox: function() {
 			return $(this).closest("div.unitBox");
+		},
+		getPagerForm: function() {
+			// 从本元素开始先向下查找pagerForm
+			var pagerForm = $(this).find(".pagerForm");
+			// 如果向下没找到，则从离本元素最近的unitBox元素下查找
+			if(pagerForm.length === 0) {
+				pagerForm = $(this).unitBox().find(".pagerForm");
+			}
+			if(pagerForm.length > 1) {
+				throw new Error("获取pagerForm时，查找到多个pagerForm，请检查代码解决冲突。")
+			}
+			if(pagerForm.length === 0) {
+				return null;
+			}
+			return pagerForm;
+		},
+		serializeJson: function() {
+			var json = {};
+			var serializeArray = $(this).serializeArray();
+			if(!$.isEmptyObject(serializeArray)) {
+				jQuery.each(serializeArray, function(i, item) {
+					json[item.name] = item.value;
+				});
+			}
+			return json;
 		}
 	});
 })(jQuery);

@@ -1,6 +1,6 @@
 {
 	"statusCode": "200",
 	"message": "操作成功。",
-	"closeDialog": ["current"],
-	"reloadNavTab": ["current"]
+	"closeDialog": [""],
+	"reloadNavTab": [""]
 }

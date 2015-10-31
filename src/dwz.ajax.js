@@ -124,10 +124,38 @@ function allAjaxDone(json) {
 	}
 }
 
+/** 统一分页查询函数 */
+function ajaxSearch(form) {
+	var $form = $(form);
+	var rel = $form.attr("rel");
+	if(rel) {
+		_reloadDiv({
+			"reloadDiv": [
+				rel
+			]
+		});
+	} else {
+		if($form.unitBox().hasClass("dialogContent")) {
+			_reloadDialog({
+				"reloadDialog": [
+					""
+				]
+			});
+		} else {
+			_reloadNavTab({
+				"reloadNavTab": [
+					""
+				]
+			});
+		}
+	}
+	return false;
+}
+
 function _closeNavTab(json) {
 	var navTabs = _parseToResults(json.closeNavTab);
 	for(var i = 0; i < navTabs.length; i++) {
-		if(navTabs[i].id === "current") {
+		if(navTabs[i].id === "") {
 			navTab.closeCurrentTab();
 		} else {
 			navTab.closeTab(navTabs[i]);
@@ -139,8 +167,8 @@ function _reloadNavTab(json) {
 	var navTabs = _parseToResults(json.reloadNavTab);
 	for(var i = 0; i < navTabs.length; i++) {
 		var reloadOptions = {
+			navTabId: navTabs[i].id,
 			data: navTabs[i].data || {},
-			navTabId: navTabs[i].id === "current" ? "" : navTabs[i].id,
 			callback: navTabs[i].callback
 		};
 		navTab.reload(navTabs[i].url, reloadOptions);
@@ -150,7 +178,7 @@ function _reloadNavTab(json) {
 function _closeDialog(json) {
 	var dialogs = _parseToResults(json.closeDialog);
 	for(var i = 0; i < dialogs.length; i++) {
-		if(dialogs[i].id === "current") {
+		if(dialogs[i].id === "") {
 			$.pdialog.closeCurrent();
 		} else {
 			$.pdialog.close(dialogs[i]);
@@ -162,8 +190,8 @@ function _reloadDialog(json) {
 	var dialogs = _parseToResults(json.reloadDialog);
 	for(var i = 0; i < dialogs.length; i++) {
 		var reloadOptions = {
+			dialogId: dialogs[i].id,
 			data: dialogs[i].data || {},
-			navTabId: dialogs[i].id === "current" ? "" : dialogs[i].id,
 			callback: dialogs[i].callback
 		};
 		$.pdialog.reload(dialogs[i].url || $.pdialog._current.data("url"), reloadOptions);
@@ -178,18 +206,11 @@ function _reloadDiv(json) {
 			callback: divs[i].callback
 		};
 		var $box = _getDivInCurrent("#" + divs[i].id);
-		var $pagerForm = $("#pagerForm", $box.unitBox());
-		if($pagerForm.size() > 0) {
-			$pagerForm = $pagerForm.eq(0);
-		} else {
-			$pagerForm = null;
+		var $pagerForm = $box.getPagerForm();
+		if($pagerForm) {
+			$.extend(reloadOptions.data, $pagerForm.serializeToJson());
 		}
-
-		var serializeArray = $pagerForm ? $pagerForm.serializeArray() : {};
-		if(!$.isEmptyObject(serializeArray)) {
-			$.extend(reloadOptions.data, $.serializeArrayToJson(serializeArray));
-		}
-		var url = divs[i].url || $pageForm.attr("action");
+		var url = divs[i].url || $pagerForm.attr("action");
 		$.extend(reloadOptions.data, url.getParams());
 
 		$box.ajaxUrl({
@@ -219,7 +240,7 @@ function _getDivInCurrent(divId) {
 	if(div.length > 0) {
 		return div;
 	}
-	throw new Error("当前页面未找到[id=" + divId + "的元素。" );
+	throw new Error("当前页面未找到[id=" + divId + "的元素。");
 }
 
 function _parseToResults(arrays) {
@@ -229,39 +250,14 @@ function _parseToResults(arrays) {
 			var attrs = arrays[i].split(",");
 			var result = {
 				id: attrs[0],
-				url: attrs[1] || null,
-				data: attrs[2] ? attrs[2].toJson() : null,
-				callback: attrs[3] || null
+				url: attrs[1] || "",
+				data: attrs[2] ? attrs[2].toJson() : "",
+				callback: attrs[3] || ""
 			}
 			results.push(result);
 		}
 	}
 	return results;
-}
-
-function navTabSearch() {
-	_reloadNavTab({
-		"reloadNavTab": [
-			"current"
-		]
-	});
-	return false;
-}
-
-function dialogSearch() {
-	_reloadDialog({
-		"reloadDialog": [
-			"current"
-		]
-	});
-	return false;
-}
-
-function divSearch(rel) {
-	_reloadDiv({
-		"reloadDiv": [rel]
-	});
-	return false;
 }
 
 function ajaxTodo(url, callback) {
@@ -331,7 +327,7 @@ $.fn.extend({
 					return false;
 				}
 
-				var url = unescape($this.attr("href")).replaceTmById($(event.target).parents(".unitBox:first"));
+				var url = unescape($this.attr("href")).replaceTmById($(event.target).unitBox());
 				DWZ.debug(url);
 				if(!url.isFinishedTm()) {
 					alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
@@ -352,9 +348,8 @@ $.fn.extend({
 		});
 	},
 	selectedTodo: function() {
-		function _getIds(selectedIds, targetType) {
+		function _getIds($box, selectedIds) {
 			var ids = "";
-			var $box = targetType == "dialog" ? $.pdialog.getCurrent() : navTab.getCurrentPanel();
 			$box.find("input:checked").filter("[name='" + selectedIds + "']").each(function(i) {
 				var val = $(this).val();
 				ids += i == 0 ? val : "," + val;
@@ -367,8 +362,7 @@ $.fn.extend({
 			var postType = $this.attr("postType") || "map";
 
 			$this.click(function() {
-				var targetType = $this.attr("targetType");
-				var ids = _getIds(selectedIds, targetType);
+				var ids = _getIds($this.unitBox(), selectedIds);
 				if(!ids) {
 					alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
 					return false;
@@ -416,10 +410,9 @@ $.fn.extend({
 	},
 	dwzExport: function() {
 		function _doExport($this) {
-			var $p = $this.attr("targetType") == "dialog" ? $.pdialog.getCurrent() : navTab.getCurrentPanel();
-			var $form = $("#pagerForm", $p);
+			var $pagerform = $this.getPagerForm();
 			var url = $this.attr("href");
-			window.location = url + (url.indexOf('?') == -1 ? "?" : "&") + $form.serialize();
+			window.location = url + (url.indexOf('?') == -1 ? "?" : "&") + $pagerform.serialize();
 		}
 
 		return this.each(function() {
