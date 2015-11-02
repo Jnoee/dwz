@@ -1,0 +1,30 @@
+<meta charset="UTF-8"/>
+<div class="pageContent">
+  <h2 class="contentTitle">
+    <a href="http://www.uploadify.com/">uploadify</a> 文件上传
+    <a href="external/uploadify.html" class="fa-file-text viewsource" title="查看源文件"></a>
+  </h2>
+
+  <div class="pageFormContent" layoutH="87">
+    <dl>
+      <dt>产品图片：</dt>
+      <dd>
+        <input id="testFileInput" type="file" name="image" uploaderOption="{
+			swf: '../external/uploadify/scripts/uploadify.swf',
+			uploader:'result/navtab-reload.json',
+			formData:{PHPSESSID:'xxx', ajax:1},
+			buttonText:'请选择文件',
+			fileSizeLimit:'200KB',
+			fileTypeDesc:'*.jpg;*.jpeg;*.gif;*.png;',
+			fileTypeExts:'*.jpg;*.jpeg;*.gif;*.png;',
+			width: 80,
+			height: 20,
+			auto:true,
+			multi:true,
+			onUploadSuccess:uploadifySuccess,
+			onQueueComplete:uploadifyQueueComplete
+		}"/>
+      </dd>
+    </dl>
+  </div>
+</div>
