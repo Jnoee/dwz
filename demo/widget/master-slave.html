@@ -19,7 +19,8 @@
 						<table class="list nowrap masterSlave" width="100%">
 							<thead>
 								<tr>
-									<th type="span" align="center" defaultVal="#index#" hiddenName="items[#index#].itemHidden">序号</th>
+									<th type="index" align="center">序号</th>
+									<th type="span" align="center" defaultVal="文本#index#" hiddenName="items[#index#].itemHidden">文本</th>
 									<th type="text" name="items[#index#].itemString" size="12" fieldClass="required" fieldAttrs="{remote:'validate_remote.html', maxlength:10}">从字符串</th>
 									<th type="text" name="items[#index#].itemInt" defaultVal="#index#" size="12" fieldClass="digits">从整数</th>
 									<th type="text" name="items[#index#].itemFloat" defaultVal="0.8" size="12" fieldClass="number">从浮点</th>
