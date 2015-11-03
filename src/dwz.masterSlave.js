@@ -29,7 +29,7 @@
           fields.push(field);
         });
 
-        $tbody.find("a.btnDel").click(function () {
+        $tbody.find("a.red").click(function () {
           var $btnDel = $(this);
 
           if ($btnDel.is("[href^=javascript:]")) {
