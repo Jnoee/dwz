@@ -38,10 +38,10 @@ var navTab = {
     this._moreBut = this.componentBox.find(this._op.stMore);
     this._moreBox = this.componentBox.find(this._op.stMoreLi);
 
-    this._prevBut.click(function (event) {
+    this._prevBut.click(function () {
       $this._scrollPrev()
     });
-    this._nextBut.click(function (event) {
+    this._nextBut.click(function () {
       $this._scrollNext()
     });
     this._moreBut.click(function () {
@@ -61,7 +61,7 @@ var navTab = {
   _init: function () {
     var $this = this;
     this._getTabs().each(function (iTabIndex) {
-      $(this).unbind("click").click(function (event) {
+      $(this).unbind("click").click(function () {
         $this._switchTab(iTabIndex);
       });
       $(this).find(navTab._op.close$).unbind("click").click(function () {
@@ -69,7 +69,7 @@ var navTab = {
       });
     });
     this._getMoreLi().each(function (iTabIndex) {
-      $(this).find(">a").unbind("click").click(function (event) {
+      $(this).find(">a").unbind("click").click(function () {
         $this._switchTab(iTabIndex);
       });
     });
@@ -80,21 +80,21 @@ var navTab = {
     var $this = this;
     $obj.contextMenu('navTabCM', {
       bindings: {
-        reload: function (t, m) {
+        reload: function (t) {
           $this._reload(t, true);
         },
-        closeCurrent: function (t, m) {
+        closeCurrent: function (t) {
           var tabId = t.attr("tabid");
           if (tabId)
             $this.closeTab(tabId);
           else
             $this.closeCurrentTab();
         },
-        closeOther: function (t, m) {
+        closeOther: function (t) {
           var index = $this._indexTabId(t.attr("tabid"));
           $this._closeOtherTab(index > 0 ? index : $this._currentIndex);
         },
-        closeAll: function (t, m) {
+        closeAll: function () {
           $this.closeAllTab();
         }
       },
@@ -200,7 +200,7 @@ var navTab = {
       this._scrollTab(-this._getTabsW(0, iEnd + 1) + this._getScrollBarW());
     }
   },
-  _scrollTab: function (iLeft, isNext) {
+  _scrollTab: function (iLeft) {
     var $this = this;
     this._tabBox.animate({
       left: iLeft + 'px'
@@ -332,8 +332,10 @@ var navTab = {
     op.flag = op.flag || $tab.data("flag");
     op.url = op.url || $tab.attr("url");
     op.data = $.isEmptyObject(op.data) ? $tab.data("data") : op.data;
+    op.callback = op.callback || $tab.data("callback");
     if (op.flag && op.url && $panel) {
       $tab.data("flag", null);
+      $tab.data("callback", null);
       $tab.attr("url", op.url);
       $tab.data("data", op.data);
 
@@ -366,11 +368,17 @@ var navTab = {
       navTabId: "",
       callback: null
     }, options);
+    var $tab;
     if(op.navTabId) {
-      var $tab = this._getTab(op.navTabId);
+      $tab = this._getTab(op.navTabId);
       $tab.data("flag", 1);
+      $tab.data("callback", op.callback);
+      op.url = op.url || $tab.attr("url");
+      $tab.attr("url", op.url);
+      op.data = $.isEmptyObject(op.data) ? $tab.data("data") : op.data;
+      $tab.data("data", op.data);
     } else {
-      var $tab = this._getTabs().eq(this._currentIndex);
+      $tab = this._getTabs().eq(this._currentIndex);
       $tab.data("flag", 1);
       this._reload($tab, op);
     }
@@ -387,15 +395,6 @@ var navTab = {
     var ih = navTab._panelBox.height();
     $panel.html(DWZ.frag["externalFrag"].replaceAll("{url}", url).replaceAll("{height}", ih + "px"));
   },
-  /**
-   *
-   * @param {Object}
-   *            tabid
-   * @param {Object}
-   *            url
-   * @param {Object}
-   *            params: title, data, fresh
-   */
   openTab: function (tabid, url, options) { // if found tabid replace tab, else create a new tab.
     var op = $.extend({
       title: "New Tab",
