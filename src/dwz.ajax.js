@@ -166,12 +166,7 @@ function _closeNavTab(json) {
 function _reloadNavTab(json) {
 	var navTabs = _parseToResults(json.reloadNavTab);
 	for(var i = 0; i < navTabs.length; i++) {
-		var reloadOptions = {
-			navTabId: navTabs[i].id,
-			data: navTabs[i].data || {},
-			callback: navTabs[i].callback
-		};
-		navTab.reload(navTabs[i].url, reloadOptions);
+		navTab.reload(navTabs[i]);
 	}
 }
 

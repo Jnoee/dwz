@@ -237,13 +237,13 @@ var DWZ = {
 		externalFrag: '<iframe src="{url}" style="width:100%;height:{height};" frameborder="no" border="0" marginwidth="0" marginheight="0"></iframe>'
 	}, // page fragment
 	_msg: {
-		statusCode_503: '服务器当前负载过大或者正在维护!',
-		validateFormError: '提交数据不完整，{0}个字段有错误，请改正后再提交!',
-		sessionTimout: '会话超时，请重新登录!',
-		alertSelectMsg: '请选择信息!',
-		forwardConfirmMsg: '继续下一步!',
+		statusCode_503: '服务器当前负载过大或者正在维护。',
+		validateFormError: '提交数据不完整，{0}个字段有错误，请改正后再提交。',
+		sessionTimout: '会话超时，请重新登录。',
+		alertSelectMsg: '请选择要操作的记录。',
+		forwardConfirmMsg: '继续下一步。',
 		dwzTitle: 'DWZ富客户端框架',
-		mainTabTitle: '我的主页'
+		mainTabTitle: '我的首页'
 	}, // alert message
 	_set: {
 		loginUrl: "", // session timeout
