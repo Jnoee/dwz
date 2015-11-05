@@ -1,0 +1,23 @@
+<div class="pageContent">
+  <div class="tree-l-box" layoutH="0">
+    <ul class="tree treeFolder">
+      <li><a href="javascript">实验室检测</a>
+        <ul>
+          <li><a href="base/table-reload-div-right.html" target="ajax" rel="jbsxBox">尿检</a></li>
+          <li><a href="base/table-reload-div-right.html" target="ajax" rel="jbsxBox">HIV检测</a></li>
+          <li><a href="base/table-reload-div-right.html" target="ajax" rel="jbsxBox">HCV检测</a></li>
+          <li><a href="base/table-reload-div-right.html" target="ajax" rel="jbsxBox">TB检测</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div id="jbsxBox" class="tree-r-box" layoutH="0"></div>
+</div>
+<script>
+  +function ($) {
+    setTimeout('$("#jbsxBox").unitBox().find("a[rel=jbsxBox]:first").click()',10);
+  }(jQuery);
+</script>
+
+	
+

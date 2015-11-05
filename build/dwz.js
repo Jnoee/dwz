@@ -5016,7 +5016,7 @@ function _reloadDiv(json) {
     var $box = _getDivInCurrent("#" + divs[i].id);
     var $pagerForm = $box.getPagerForm();
     if ($pagerForm) {
-      $.extend(op.data, $pagerForm.serializeToJson());
+      $.extend(op.data, $pagerForm.serializeJson());
     }
     var url = divs[i].url || $pagerForm.attr("action");
     $.extend(op.data, url.getParams());
