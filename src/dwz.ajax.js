@@ -96,11 +96,11 @@ function _iframeResponse(iframe, callback) {
 function allAjaxDone(json) {
   DWZ.ajaxDone(json);
   if (json[DWZ.keys.statusCode] == DWZ.statusCode.ok) {
-    _closeNavTab(json);
-    _closeDialog(json);
-    _reloadNavTab(json);
-    _reloadDialog(json);
     _reloadDiv(json);
+    _reloadDialog(json);
+    _reloadNavTab(json);
+    _closeDialog(json);
+    _closeNavTab(json);
   }
 }
 
@@ -244,6 +244,10 @@ function ajaxTodo(url, callback) {
     success: $callback,
     error: DWZ.ajaxError
   });
+}
+
+function uploadifyError(file, errorCode, errorMsg) {
+  alertMsg.error(errorCode + ": " + errorMsg);
 }
 
 $.fn.extend({

@@ -363,14 +363,14 @@ var navTab = {
   },
   reload: function (options) {
     var op = $.extend({
+      id: "",
       url: "",
       data: {},
-      navTabId: "",
       callback: null
     }, options);
     var $tab;
-    if(op.navTabId) {
-      $tab = this._getTab(op.navTabId);
+    if(op.id) {
+      $tab = this._getTab(op.id);
       $tab.data("flag", 1);
       $tab.data("callback", op.callback);
       op.url = op.url || $tab.attr("url");
