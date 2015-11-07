@@ -81,6 +81,7 @@ var navTab = {
     $obj.contextMenu('navTabCM', {
       bindings: {
         reload: function (t) {
+          t.data("flag", 1);
           $this._reload(t, true);
         },
         closeCurrent: function (t) {
@@ -320,24 +321,17 @@ var navTab = {
       navTab.closeCurrentTab();
     });
   },
-  _reload: function ($tab, options) {
-    var op = $.extend({
-      url: "",
-      data: {},
-      callback: null,
-      flag: null
-    }, options);
+  _reload: function ($tab) {
+    var op = {
+      url: $tab.attr("url"),
+      data: $tab.data("data") || {},
+      callback: $tab.data("callback"),
+      flag: $tab.data("flag")
+    };
 
     var $panel = this.getPanel($tab.attr("tabid"));
-    op.flag = op.flag || $tab.data("flag");
-    op.url = op.url || $tab.attr("url");
-    op.data = $.isEmptyObject(op.data) ? $tab.data("data") : op.data;
-    op.callback = op.callback || $tab.data("callback");
     if (op.flag && op.url && $panel) {
       $tab.data("flag", null);
-      $tab.data("callback", null);
-      $tab.attr("url", op.url);
-      $tab.data("data", op.data);
 
       if ($tab.hasClass("external")) {
         navTab.openExternal(op.url, $panel);
@@ -368,20 +362,20 @@ var navTab = {
       data: {},
       callback: null
     }, options);
-    var $tab;
-    if(op.id) {
-      $tab = this._getTab(op.id);
-      $tab.data("flag", 1);
-      $tab.data("callback", op.callback);
-      op.url = op.url || $tab.attr("url");
+    var $tab = op.id ? this._getTab(op.id) : this._getTabs().eq(this._currentIndex);
+    if (op.url) {
       $tab.attr("url", op.url);
-      op.data = $.isEmptyObject(op.data) ? $tab.data("data") : op.data;
-      $tab.data("data", op.data);
     } else {
-      $tab = this._getTabs().eq(this._currentIndex);
-      $tab.data("flag", 1);
-      this._reload($tab, op);
+      op.url = $tab.attr("url");
     }
+    if ($.isEmptyObject(op.data)) {
+      op.data = $tab.data("data") || {};
+    } else {
+      $tab.data("data", op.data);
+    }
+    $tab.data("callback", op.callback);
+    $tab.data("flag", 1);
+    if (!op.id) this._reload($tab);
   },
   getCurrentPanel: function () {
     return this._getPanels().eq(this._currentIndex);

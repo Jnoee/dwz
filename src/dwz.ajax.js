@@ -223,7 +223,7 @@ function _parseToResults(arrays) {
       var result = {
         id: attrs[0],
         url: attrs[1] || "",
-        data: attrs[2] ? attrs[2].toJson() : "",
+        data: attrs[2] ? attrs[2].toJson() : {},
         callback: attrs[3] || ""
       };
       results.push(result);

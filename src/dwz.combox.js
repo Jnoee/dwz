@@ -22,7 +22,7 @@
 	};
 
 	var _onchange = function(event) {
-		var $ref = $("#" + event.data.ref);
+		var $ref = $("#" + event.data.ref, $(event.target).unitBox());
 		if($ref.size() == 0)
 			return false;
 		$.ajax({
