@@ -1,7 +1,3 @@
-/**
- * @requires jquery.validate.js
- * @author ZhangHuihua@msn.com
- */
 (function($) {
 	if($.validator) {
 		var match = function(value, pattern, attrs) {
@@ -15,7 +11,7 @@
 				}
 			}
 			return true;
-		}
+		};
 
 		var getTarget = function(element, param) {
 			var form = $(element).closest("form");
@@ -159,6 +155,15 @@
 			},
 			postcode: {
 				postcode: true
+			},
+			time: {
+				time: true
+			},
+			price: {
+				price: true
+			},
+			params: {
+				params: true
 			}
 		});
 		$.validator.setDefaults({
