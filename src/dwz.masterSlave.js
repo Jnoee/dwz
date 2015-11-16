@@ -35,7 +35,6 @@
           if ($btnDel.is("[href^=javascript:]")) {
             $btnDel.parents("tr:first").remove();
             initSuffix($tbody);
-            return false;
           }
 
           function delDbData() {
@@ -59,8 +58,6 @@
           } else {
             delDbData();
           }
-
-          return false;
         });
 
         var addButTxt = $table.attr('addButton') || "新增条目";
