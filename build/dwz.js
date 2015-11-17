@@ -5710,7 +5710,6 @@ $.fn.extend({
             $tr.appendTo($tbody).initUI().find("a.red").click(function () {
               $(this).parents("tr:first").remove();
               initSuffix($tbody);
-              return false;
             });
           }
           initSuffix($tbody);
