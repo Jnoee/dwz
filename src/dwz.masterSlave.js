@@ -32,11 +32,6 @@
         $tbody.find("a.red").click(function () {
           var $btnDel = $(this);
 
-          if ($btnDel.is("[href^=javascript:]")) {
-            $btnDel.parents("tr:first").remove();
-            initSuffix($tbody);
-          }
-
           function delDbData() {
             $.ajax({
               type: 'POST',
@@ -51,12 +46,17 @@
             });
           }
 
-          if ($btnDel.attr("title")) {
-            alertMsg.confirm($btnDel.attr("title"), {
-              okCall: delDbData
-            });
+          if ($btnDel.is("[href^=javascript:]")) {
+            $btnDel.parents("tr:first").remove();
+            initSuffix($tbody);
           } else {
-            delDbData();
+            if ($btnDel.attr("title")) {
+              alertMsg.confirm($btnDel.attr("title"), {
+                okCall: delDbData
+              });
+            } else {
+              delDbData();
+            }
           }
         });
 
@@ -147,11 +147,11 @@
             }
 
             html = '<input type="hidden" name="' + field.lookupGroup + '.' + field.lookupPk + suffix + '"/>' + '<input type="text" name="' + field.name + '"' + suggestFrag + ' lookupPk="' + field.lookupPk + '" size="' + field.size + '" class="' + field.fieldClass + '"/>'
-                + '<a class="btn fa-search-plus" href="' + field.lookupUrl + '" lookupGroup="' + field.lookupGroup + '" ' + suggestFrag + ' lookupPk="' + field.lookupPk + '" title="查找带回">查找带回</a>';
+              + '<a class="btn fa-search-plus" href="' + field.lookupUrl + '" lookupGroup="' + field.lookupGroup + '" ' + suggestFrag + ' lookupPk="' + field.lookupPk + '" title="查找带回">查找带回</a>';
             break;
           case 'attach':
             html = '<input type="hidden" name="' + field.lookupGroup + '.' + field.lookupPk + suffix + '"/>' + '<input type="text" name="' + field.name + '" size="' + field.size + '" readonly="readonly" class="' + field.fieldClass + '"/>' + '<a class="btn fa-cloud-upload" href="'
-                + field.lookupUrl + '" lookupGroup="' + field.lookupGroup + '" ' + suffixFrag + ' lookupPk="' + field.lookupPk + '" width="SS" height="S" title="上传文件">上传文件</a>';
+              + field.lookupUrl + '" lookupGroup="' + field.lookupGroup + '" ' + suffixFrag + ' lookupPk="' + field.lookupPk + '" width="SS" height="S" title="上传文件">上传文件</a>';
             break;
           case 'enum':
             $.ajax({
