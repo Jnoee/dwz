@@ -5726,7 +5726,7 @@ $.fn.extend({
       function initSuffix($tbody) {
         $tbody.find('>tr').each(function (i) {
           $(':input, a.btn, span:not([class*="error"])', this).each(function () {
-            var $this = $(this), name = $this.attr('name'), val = $this.val();
+            var $this = $(this);
             
             var val = $this.val();
             if (val && val.indexOf("#index#") >= 0) {
