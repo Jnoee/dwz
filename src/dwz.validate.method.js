@@ -111,7 +111,7 @@
 			var endTimePattern = endTime.attr("timeFmt") || "HH:mm";
 			var startTimePattern = startTime.attr("timeFmt") || "HH:mm";
 
-			if(endDate.val() && startDate.val()) {
+			if(endTime.val() && startTime.val()) {
 				return endTime.val().parseDate(endTimePattern) > startTime.val().parseDate(startTimePattern);
 			}
 			return true;
@@ -123,7 +123,7 @@
 			var endTimePattern = endTime.attr("timeFmt") || "HH:mm";
 			var startTimePattern = startTime.attr("timeFmt") || "HH:mm";
 
-			if(endDate.val() && startDate.val()) {
+			if(endTime.val() && startTime.val()) {
 				return endTime.val().parseDate(endTimePattern) >= startTime.val().parseDate(startTimePattern);
 			}
 			return true;
@@ -169,16 +169,14 @@
 		$.validator.setDefaults({
 			errorElement: "span",
 			errorPlacement: function(error, element) {
-				error.addClass("fa fa-bell-o red");
-				if(element.hasClass("hideError")) {
-					element.attr("title", error.text());
-				} else {
+				error.addClass("fa fa-bell-o red test");
+				element.attr("title", error.text());
+				if(!element.hasClass("hideError")) {
 					if(element.is("input:checkbox") && element.parent().is("label.unit")) {
 						element.parent().parent().append(error);
 					} else {
 						element.parent().append(error);
 					}
-					error.attr("title", error.text());
 				}
 				error.empty();
 			}

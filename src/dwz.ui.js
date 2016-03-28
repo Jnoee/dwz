@@ -303,7 +303,7 @@ function initUI(_box) {
   $("a[target=selectedTodo]", $p).selectedTodo();
 
   // 处理awesome字体图标
-  $("[class*=fa-]:not(i)").each(function () {
+  $("[class*=fa-]:not(i)", $p).each(function () {
     var i = $("<i></i>");
     i.css("line-height", "inherit");
     i.addClass("fa");

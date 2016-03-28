@@ -90,24 +90,13 @@
       function initSuffix($tbody) {
         $tbody.find('>tr').each(function (i) {
           $(':input, a.btn, span:not([class*="error"])', this).each(function () {
-            var $this = $(this), name = $this.attr('name'), val = $this.val();
-
-            if (name)
-              $this.attr('name', name.replaceSuffix(i));
-
-            var lookupGroup = $this.attr('lookupGroup');
-            if (lookupGroup) {
-              $this.attr('lookupGroup', lookupGroup.replaceSuffix(i));
-            }
-
-            var suffix = $this.attr("suffix");
-            if (suffix) {
-              $this.attr('suffix', suffix.replaceSuffix(i));
-            }
-
-            if (val && val.indexOf("#index#") >= 0)
+            var $this = $(this);
+            
+            var val = $this.val();
+            if (val && val.indexOf("#index#") >= 0) {
               $this.val(val.replace('#index#', i + 1));
-
+            }
+            
             if ($this.is("span")) {
               if ($this.attr("type") == "index") {
                 $this.text($this.text().replace(/^[0-9]+$/, i + 1).replace('#index#', i + 1));
@@ -115,6 +104,12 @@
                 $this.text($this.text().replace('#index#', i + 1));
               }
             }
+            
+            $.each(this.attributes, function(index, attr) {
+              if(attr.name != 'type' && attr.name != 'value') {
+                $this.attr(attr.name, attr.value.replaceSuffix(i));
+              }
+            });
           });
         });
       }
@@ -168,7 +163,7 @@
             });
             break;
           case 'date':
-            html = '<input type="text" name="' + field.name + '" value="' + field.defaultVal + '" class="date ' + field.fieldClass + '" dateFmt="' + field.patternDate + '" size="' + field.size + '"/>' + '<a class="btn fa-calendar" href="javascript:void(0)">选择</a>';
+            html = '<input type="text" name="' + field.name + '" value="' + field.defaultVal + '" class="date ' + field.fieldClass + '" dateFmt="' + field.patternDate + '" size="' + field.size + '" ' + attrFrag + '/>';
             break;
           // 增加checkbox支持
           case 'checkbox':
