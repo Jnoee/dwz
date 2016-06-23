@@ -368,6 +368,8 @@
 				if($(dialog).data("id"))
 					$.taskBar.closeDialog($(dialog).data("id"));
 			}
+			// 如果有日历控件则移除日历控件
+			$("#calendar").remove();
 			$("body").removeData($(dialog).data("id"));
 			$(dialog).trigger(DWZ.eventType.pageClear).remove();
 		},
