@@ -1,0 +1,42 @@
+<meta charset="UTF-8" />
+<div class="pageContent">
+	<h2 class="contentTitle">
+		<a href="http://www.uploadify.com/" target="_blank">uploadify</a> 文件上传
+		<a href="external/uploadifive.html" class="fa-file-text viewsource"
+			title="查看源文件"></a>
+	</h2>
+	<form action="result/navtab-reload.json" class="validateForm">
+		<div class="pageFormContent" layoutH="87">
+			<dl style="height: auto">
+				<dt>单张图片：</dt>
+				<dd>
+					<input type="file" id="pic" name="pic" class="required" uploadifiveImg="{
+			uploadScript:'result/uploadifive-success.json',
+			uploadLimit:1}" />
+				</dd>
+			</dl>
+			<dl class="nowrap" style="height: auto">
+				<dt>多张图片：</dt>
+				<dd>
+					<input type="file" id="imgs" name="imgs" class="required" uploadifiveImg="{
+			uploadScript:'result/uploadifive-success.json',
+			uploadLimit:3}" />
+				</dd>
+			</dl>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive">
+						<div class="buttonContent">
+							<button type="submit">提交</button>
+						</div>
+					</div></li>
+				<li><div class="button">
+						<div class="buttonContent">
+							<button type="button" class="close">取消</button>
+						</div>
+					</div></li>
+			</ul>
+		</div>
+	</form>
+</div>

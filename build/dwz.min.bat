@@ -38,6 +38,7 @@ type ..\src\dwz.checkbox.js >> dwz.js
 type ..\src\dwz.combox.js >> dwz.js
 type ..\src\dwz.history.js >> dwz.js
 type ..\src\dwz.print.js >> dwz.js
+type ..\src\dwz.uploadifive.js >> dwz.js
 type ..\src\dwz.regional.zh.js >> dwz.js
 
 uglifyjs dwz.js -o dwz.min.js -c -m

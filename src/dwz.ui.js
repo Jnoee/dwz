@@ -134,6 +134,10 @@ function initUI(_box) {
 
     $this.uploadify(options);
   });
+  
+  $(":file[uploadifiveImg]", $p).each(function () {
+    $(this).uploadifiveImg();
+  });
 
   $("input[type=text], input[type=password], textarea", $p).addClass("textInput").focusClass("focus");
   $("input[readonly], textarea[readonly]", $p).addClass("readonly");
