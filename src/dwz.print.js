@@ -1,19 +1,18 @@
 /**
  * @author ZhangHuihua@msn.com
- * 
  */
 (function($) {
-	$.printBox = function(rel) {
-		var _printBoxId = 'printBox';
-		var $contentBox = rel ? $('#' + rel) : $("body"), $printBox = $('#' + _printBoxId);
+  $.printBox = function(rel) {
+    var _printBoxId = 'printBox';
+    var $contentBox = rel ? $('#' + rel) : $("body"), $printBox = $('#' + _printBoxId);
 
-		if($printBox.size() == 0) {
-			$printBox = $('<div id="' + _printBoxId + '"></div>').appendTo("body");
-		}
+    if ($printBox.size() == 0) {
+      $printBox = $('<div id="' + _printBoxId + '"></div>').appendTo("body");
+    }
 
-		$printBox.html($contentBox.html()).find("[layoutH]").height("auto");
-		window.print();
+    $printBox.html($contentBox.html()).find("[layoutH]").height("auto");
+    window.print();
 
-	}
+  }
 
 })(jQuery);

@@ -1,6 +1,5 @@
 /**
  * @author ZhangHuihua@msn.com
- *
  */
 var navTab = {
   componentBox: null, // tab component. contain tabBox, prevBut, nextBut, panelBox
@@ -24,9 +23,8 @@ var navTab = {
     stMoreLi: "ul.tabsMoreList"
   },
 
-  init: function (options) {
-    if ($.History)
-      $.History.init("#container");
+  init: function(options) {
+    if ($.History) $.History.init("#container");
     var $this = this;
     $.extend(this._op, options);
 
@@ -38,17 +36,17 @@ var navTab = {
     this._moreBut = this.componentBox.find(this._op.stMore);
     this._moreBox = this.componentBox.find(this._op.stMoreLi);
 
-    this._prevBut.click(function () {
+    this._prevBut.click(function() {
       $this._scrollPrev()
     });
-    this._nextBut.click(function () {
+    this._nextBut.click(function() {
       $this._scrollNext()
     });
-    this._moreBut.click(function () {
+    this._moreBut.click(function() {
       $this._moreBox.show();
       return false;
     });
-    $(document).click(function () {
+    $(document).click(function() {
       $this._moreBox.hide()
     });
 
@@ -58,48 +56,48 @@ var navTab = {
     this._init();
     this._ctrlScrollBut();
   },
-  _init: function () {
+  _init: function() {
     var $this = this;
-    this._getTabs().each(function (iTabIndex) {
-      $(this).unbind("click").click(function () {
+    this._getTabs().each(function(iTabIndex) {
+      $(this).unbind("click").click(function() {
         $this._switchTab(iTabIndex);
       });
-      $(this).find(navTab._op.close$).unbind("click").click(function () {
+      $(this).find(navTab._op.close$).unbind("click").click(function() {
         $this._closeTab(iTabIndex);
       });
     });
-    this._getMoreLi().each(function (iTabIndex) {
-      $(this).find(">a").unbind("click").click(function () {
+    this._getMoreLi().each(function(iTabIndex) {
+      $(this).find(">a").unbind("click").click(function() {
         $this._switchTab(iTabIndex);
       });
     });
 
     this._switchTab(this._currentIndex);
   },
-  _contextmenu: function ($obj) { // navTab右键菜单
+  _contextmenu: function($obj) { // navTab右键菜单
     var $this = this;
     $obj.contextMenu('navTabCM', {
       bindings: {
-        reload: function (t) {
+        reload: function(t) {
           t.data("flag", 1);
           $this._reload(t, true);
         },
-        closeCurrent: function (t) {
+        closeCurrent: function(t) {
           var tabId = t.attr("tabid");
           if (tabId)
             $this.closeTab(tabId);
           else
             $this.closeCurrentTab();
         },
-        closeOther: function (t) {
+        closeOther: function(t) {
           var index = $this._indexTabId(t.attr("tabid"));
           $this._closeOtherTab(index > 0 ? index : $this._currentIndex);
         },
-        closeAll: function () {
+        closeAll: function() {
           $this.closeAllTab();
         }
       },
-      ctrSub: function (t, m) {
+      ctrSub: function(t, m) {
         var mReload = m.find("[rel='reload']");
         var mCur = m.find("[rel='closeCurrent']");
         var mOther = m.find("[rel='closeOther']");
@@ -121,40 +119,37 @@ var navTab = {
     });
   },
 
-  _getTabs: function () {
+  _getTabs: function() {
     return this._tabBox.find("> li");
   },
-  _getPanels: function () {
+  _getPanels: function() {
     return this._panelBox.find("> div");
   },
-  _getMoreLi: function () {
+  _getMoreLi: function() {
     return this._moreBox.find("> li");
   },
-  _getTab: function (tabid) {
+  _getTab: function(tabid) {
     var index = this._indexTabId(tabid);
-    if (index >= 0)
-      return this._getTabs().eq(index);
+    if (index >= 0) return this._getTabs().eq(index);
   },
-  getPanel: function (tabid) {
+  getPanel: function(tabid) {
     var index = this._indexTabId(tabid);
-    if (index >= 0)
-      return this._getPanels().eq(index);
+    if (index >= 0) return this._getPanels().eq(index);
   },
-  _getTabsW: function (iStart, iEnd) {
+  _getTabsW: function(iStart, iEnd) {
     return this._tabsW(this._getTabs().slice(iStart, iEnd));
   },
-  _tabsW: function ($tabs) {
+  _tabsW: function($tabs) {
     var iW = 0;
-    $tabs.each(function () {
+    $tabs.each(function() {
       iW += $(this).outerWidth(true);
     });
     return iW;
   },
-  _indexTabId: function (tabid) {
-    if (!tabid)
-      return -1;
+  _indexTabId: function(tabid) {
+    if (!tabid) return -1;
     var iOpenIndex = -1;
-    this._getTabs().each(function (index) {
+    this._getTabs().each(function(index) {
       if ($(this).attr("tabid") == tabid) {
         iOpenIndex = index;
         return;
@@ -162,54 +157,52 @@ var navTab = {
     });
     return iOpenIndex;
   },
-  _getLeft: function () {
+  _getLeft: function() {
     return this._tabBox.position().left;
   },
-  _getScrollBarW: function () {
+  _getScrollBarW: function() {
     return this.componentBox.width() - 55;
   },
 
-  _visibleStart: function () {
+  _visibleStart: function() {
     var iLeft = this._getLeft(), iW = 0;
     var $tabs = this._getTabs();
     for (var i = 0; i < $tabs.size(); i++) {
-      if (iW + iLeft >= 0)
-        return i;
+      if (iW + iLeft >= 0) return i;
       iW += $tabs.eq(i).outerWidth(true);
     }
     return 0;
   },
-  _visibleEnd: function () {
+  _visibleEnd: function() {
     var iLeft = this._getLeft(), iW = 0;
     var $tabs = this._getTabs();
     for (var i = 0; i < $tabs.size(); i++) {
       iW += $tabs.eq(i).outerWidth(true);
-      if (iW + iLeft > this._getScrollBarW())
-        return i;
+      if (iW + iLeft > this._getScrollBarW()) return i;
     }
     return $tabs.size();
   },
-  _scrollPrev: function () {
+  _scrollPrev: function() {
     var iStart = this._visibleStart();
     if (iStart > 0) {
       this._scrollTab(-this._getTabsW(0, iStart - 1));
     }
   },
-  _scrollNext: function () {
+  _scrollNext: function() {
     var iEnd = this._visibleEnd();
     if (iEnd < this._getTabs().size()) {
       this._scrollTab(-this._getTabsW(0, iEnd + 1) + this._getScrollBarW());
     }
   },
-  _scrollTab: function (iLeft) {
+  _scrollTab: function(iLeft) {
     var $this = this;
     this._tabBox.animate({
       left: iLeft + 'px'
-    }, 200, function () {
+    }, 200, function() {
       $this._ctrlScrollBut();
     });
   },
-  _scrollCurrent: function () { // auto scroll current tab
+  _scrollCurrent: function() { // auto scroll current tab
     var iW = this._tabsW(this._getTabs());
     if (iW <= this._getScrollBarW()) {
       this._scrollTab(0);
@@ -218,10 +211,11 @@ var navTab = {
     } else if (this._currentIndex < this._visibleStart()) {
       this._scrollTab(-this._getTabsW(0, this._currentIndex));
     } else if (this._currentIndex >= this._visibleEnd()) {
-      this._scrollTab(this._getScrollBarW() - this._getTabs().eq(this._currentIndex).outerWidth(true) - this._getTabsW(0, this._currentIndex));
+      this._scrollTab(this._getScrollBarW() - this._getTabs().eq(this._currentIndex).outerWidth(true)
+              - this._getTabsW(0, this._currentIndex));
     }
   },
-  _ctrlScrollBut: function () {
+  _ctrlScrollBut: function() {
     var iW = this._tabsW(this._getTabs());
     if (this._getScrollBarW() > iW) {
       this._prevBut.hide();
@@ -239,7 +233,7 @@ var navTab = {
     }
   },
 
-  _switchTab: function (iTabIndex) {
+  _switchTab: function(iTabIndex) {
     var $tab = this._getTabs().removeClass("selected").eq(iTabIndex).addClass("selected");
 
     if (DWZ.ui.hideMode == 'offsets') {
@@ -263,36 +257,34 @@ var navTab = {
     this._reload($tab);
   },
 
-  _closeTab: function (index, openTabid) {
+  _closeTab: function(index, openTabid) {
 
     this._getTabs().eq(index).remove();
     this._getPanels().eq(index).trigger(DWZ.eventType.pageClear).remove();
     this._getMoreLi().eq(index).remove();
-    if (this._currentIndex >= index)
-      this._currentIndex--;
+    if (this._currentIndex >= index) this._currentIndex--;
 
     if (openTabid) {
       var openIndex = this._indexTabId(openTabid);
-      if (openIndex > 0)
-        this._currentIndex = openIndex;
+      if (openIndex > 0) this._currentIndex = openIndex;
     }
 
     this._init();
     this._scrollCurrent();
     this._reload(this._getTabs().eq(this._currentIndex));
   },
-  closeTab: function (tabid) {
+  closeTab: function(tabid) {
     var index = this._indexTabId(tabid);
     if (index > 0) {
       this._closeTab(index);
     }
   },
-  closeCurrentTab: function (openTabid) { // openTabid 可以为空，默认关闭当前tab后，打开最后一个tab
+  closeCurrentTab: function(openTabid) { // openTabid 可以为空，默认关闭当前tab后，打开最后一个tab
     if (this._currentIndex > 0) {
       this._closeTab(this._currentIndex, openTabid);
     }
   },
-  closeAllTab: function () {
+  closeAllTab: function() {
     this._getTabs().filter(":gt(0)").remove();
     this._getPanels().filter(":gt(0)").trigger(DWZ.eventType.pageClear).remove();
     this._getMoreLi().filter(":gt(0)").remove();
@@ -300,7 +292,7 @@ var navTab = {
     this._init();
     this._scrollCurrent();
   },
-  _closeOtherTab: function (index) {
+  _closeOtherTab: function(index) {
     index = index || this._currentIndex;
     if (index > 0) {
       var str$ = ":eq(" + index + ")";
@@ -315,13 +307,13 @@ var navTab = {
     }
   },
 
-  _loadUrlCallback: function ($panel) {
+  _loadUrlCallback: function($panel) {
     $panel.find("[layoutH]").layoutH();
-    $panel.find(":button.close").click(function () {
+    $panel.find(":button.close").click(function() {
       navTab.closeCurrentTab();
     });
   },
-  _reload: function ($tab) {
+  _reload: function($tab) {
     var op = {
       url: $tab.attr("url"),
       data: $tab.data("data") || {},
@@ -346,16 +338,15 @@ var navTab = {
           type: "POST",
           url: op.url.cleanParams(),
           data: op.data,
-          callback: function (response) {
+          callback: function(response) {
             navTab._loadUrlCallback($panel);
-            if ($.isFunction(op.callback))
-              op.callback(response);
+            if ($.isFunction(op.callback)) op.callback(response);
           }
         });
       }
     }
   },
-  reload: function (options) {
+  reload: function(options) {
     var op = $.extend({
       id: "",
       url: "",
@@ -377,19 +368,18 @@ var navTab = {
     $tab.data("flag", 1);
     if (!op.id) this._reload($tab);
   },
-  getCurrentPanel: function () {
+  getCurrentPanel: function() {
     return this._getPanels().eq(this._currentIndex);
   },
-  checkTimeout: function () {
+  checkTimeout: function() {
     var json = DWZ.jsonEval(this.getCurrentPanel().html());
-    if (json && json[DWZ.keys.statusCode] == DWZ.statusCode.timeout)
-      this.closeCurrentTab();
+    if (json && json[DWZ.keys.statusCode] == DWZ.statusCode.timeout) this.closeCurrentTab();
   },
-  openExternal: function (url, $panel) {
+  openExternal: function(url, $panel) {
     var ih = navTab._panelBox.height();
     $panel.html(DWZ.frag["externalFrag"].replaceAll("{url}", url).replaceAll("{height}", ih + "px"));
   },
-  openTab: function (tabid, url, options) { // if found tabid replace tab, else create a new tab.
+  openTab: function(tabid, url, options) { // if found tabid replace tab, else create a new tab.
     var op = $.extend({
       title: "New Tab",
       type: "GET",
@@ -416,7 +406,7 @@ var navTab = {
             type: op.type,
             url: url,
             data: op.data,
-            callback: function () {
+            callback: function() {
               navTab._loadUrlCallback($panel);
             }
           });
@@ -427,7 +417,8 @@ var navTab = {
       var tabFrag = '<li tabid="#tabid#"><a href="javascript:" title="#title#" class="#tabid#"><span>#title#</span></a><a href="javascript:;" class="close">close</a></li>';
       this._tabBox.append(tabFrag.replaceAll("#tabid#", tabid).replaceAll("#title#", op.title));
       this._panelBox.append('<div class="page unitBox"></div>');
-      this._moreBox.append('<li><a href="javascript:" title="#title#">#title#</a></li>'.replaceAll("#title#", op.title));
+      this._moreBox
+              .append('<li><a href="javascript:" title="#title#">#title#</a></li>'.replaceAll("#title#", op.title));
 
       var $tabs = this._getTabs();
       var $tab = $tabs.filter(":last");
@@ -442,18 +433,17 @@ var navTab = {
           type: op.type,
           url: url,
           data: op.data,
-          callback: function () {
+          callback: function() {
             navTab._loadUrlCallback($panel);
           }
         });
       }
 
       if ($.History) {
-        setTimeout(function () {
-          $.History.addHistory(tabid, function (tabid) {
+        setTimeout(function() {
+          $.History.addHistory(tabid, function(tabid) {
             var i = navTab._indexTabId(tabid);
-            if (i >= 0)
-              navTab._switchTab(i);
+            if (i >= 0) navTab._switchTab(i);
           }, tabid);
         }, 10);
       }

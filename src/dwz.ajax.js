@@ -1,16 +1,12 @@
 /**
  * @author ZhangHuihua@msn.com
- *
  */
-
 function validateCallback(form, callback, confirmMsg) {
   var $form = $(form);
 
-  if (!$form.valid()) {
-    return false;
-  }
+  if (!$form.valid()) { return false; }
 
-  var _submitFn = function () {
+  var _submitFn = function() {
     $.ajax({
       type: form.method || 'POST',
       url: $form.attr("action"),
@@ -38,7 +34,8 @@ function iframeCallback(form, callback) {
   if (!$form.valid()) return false;
 
   if ($iframe.size() == 0) {
-    $iframe = $("<iframe id='callbackframe' name='callbackframe' src='about:blank' style='display:none'></iframe>").appendTo("body");
+    $iframe = $("<iframe id='callbackframe' name='callbackframe' src='about:blank' style='display:none'></iframe>")
+            .appendTo("body");
   }
   if (!form.ajax) {
     $form.append('<input type="hidden" name="ajax" value="1" />');
@@ -53,23 +50,21 @@ function _iframeResponse(iframe, callback) {
 
   $document.trigger("ajaxStart");
 
-  $iframe.bind("load", function () {
+  $iframe.bind("load", function() {
     $iframe.unbind("load");
     $document.trigger("ajaxStop");
 
     if (iframe.src == "javascript:'%3Chtml%3E%3C/html%3E';" || // For Safari
-        iframe.src == "javascript:'<html></html>';") { // For FF, IE
+    iframe.src == "javascript:'<html></html>';") { // For FF, IE
       return;
     }
 
     var doc = iframe.contentDocument || iframe.document;
 
     // fixing Opera 9.26,10.00
-    if (doc.readyState && doc.readyState != 'complete')
-      return;
+    if (doc.readyState && doc.readyState != 'complete') return;
     // fixing Opera 9.64
-    if (doc.body && doc.body.innerHTML == "false")
-      return;
+    if (doc.body && doc.body.innerHTML == "false") return;
 
     var response;
 
@@ -97,10 +92,10 @@ function allAjaxDone(json) {
   DWZ.ajaxDone(json);
   if (json[DWZ.keys.statusCode] == DWZ.statusCode.ok) {
     _reloadDiv(json);
-    
+
     _closeDialog(json);
     _reloadDialog(json);
-    
+
     _reloadNavTab(json);
     _closeNavTab(json);
   }
@@ -112,22 +107,16 @@ function ajaxSearch(form) {
   var rel = $form.attr("rel");
   if (rel) {
     _reloadDiv({
-      "reloadDiv": [
-        rel
-      ]
+      "reloadDiv": [rel]
     });
   } else {
     if ($form.unitBox().hasClass("dialogContent")) {
       _reloadDialog({
-        "reloadDialog": [
-          ""
-        ]
+        "reloadDialog": [""]
       });
     } else {
       _reloadNavTab({
-        "reloadNavTab": [
-          ""
-        ]
+        "reloadNavTab": [""]
       });
     }
   }
@@ -194,7 +183,7 @@ function _reloadDiv(json) {
       type: "POST",
       url: url,
       data: op.data,
-      callback: function (response) {
+      callback: function(response) {
         $box.find("[layoutH]").layoutH();
         if ($.isFunction(op.callback)) {
           op.callback(response);
@@ -236,8 +225,7 @@ function _parseToResults(arrays) {
 
 function ajaxTodo(url, callback) {
   var $callback = callback || allAjaxDone;
-  if (!$.isFunction($callback))
-    $callback = eval('(' + callback + ')');
+  if (!$.isFunction($callback)) $callback = eval('(' + callback + ')');
   $.ajax({
     type: 'POST',
     url: url,
@@ -253,13 +241,11 @@ function uploadifyError(file, errorCode, errorMsg) {
 }
 
 $.fn.extend({
-  ajaxTodo: function () {
-    return this.each(function () {
+  ajaxTodo: function() {
+    return this.each(function() {
       var $this = $(this);
-      $this.click(function (event) {
-        if ($this.hasClass('disabled')) {
-          return false;
-        }
+      $this.click(function(event) {
+        if ($this.hasClass('disabled')) { return false; }
 
         var url = decodeURI($this.attr("href")).replaceTmById($(event.target).unitBox());
         DWZ.debug(url);
@@ -270,7 +256,7 @@ $.fn.extend({
         var title = $this.attr("title");
         if (title) {
           alertMsg.confirm(title, {
-            okCall: function () {
+            okCall: function() {
               ajaxTodo(url, $this.attr("callback"));
             }
           });
@@ -281,22 +267,22 @@ $.fn.extend({
       });
     });
   },
-  selectedTodo: function () {
+  selectedTodo: function() {
     function _getIds($box, selectedIds) {
       var ids = "";
-      $box.find("input:checked").filter("[name='" + selectedIds + "']").each(function (i) {
+      $box.find("input:checked").filter("[name='" + selectedIds + "']").each(function(i) {
         var val = $(this).val();
         ids += i == 0 ? val : "," + val;
       });
       return ids;
     }
 
-    return this.each(function () {
+    return this.each(function() {
       var $this = $(this);
       var selectedIds = $this.attr("rel") || "ids";
       var postType = $this.attr("postType") || "map";
 
-      $this.click(function () {
+      $this.click(function() {
         var ids = _getIds($this.unitBox(), selectedIds);
         if (!ids) {
           alertMsg.error($this.attr("warn") || DWZ.msg("alertSelectMsg"));
@@ -304,8 +290,7 @@ $.fn.extend({
         }
 
         var _callback = $this.attr("callback") || allAjaxDone;
-        if (!$.isFunction(_callback))
-          _callback = eval('(' + _callback + ')');
+        if (!$.isFunction(_callback)) _callback = eval('(' + _callback + ')');
 
         function _doPost() {
           $.ajax({
@@ -313,9 +298,9 @@ $.fn.extend({
             url: $this.attr('href'),
             dataType: 'json',
             cache: false,
-            data: function () {
+            data: function() {
               if (postType == 'map') {
-                return $.map(ids.split(','), function (val) {
+                return $.map(ids.split(','), function(val) {
                   return {
                     name: selectedIds,
                     value: val
@@ -344,20 +329,20 @@ $.fn.extend({
       });
     });
   },
-  dwzExport: function () {
+  dwzExport: function() {
     function _doExport($this) {
       var $pagerform = $this.getPagerForm();
       var url = $this.attr("href");
       window.location = url + (url.indexOf('?') == -1 ? "?" : "&") + $pagerform.serialize();
     }
 
-    return this.each(function () {
+    return this.each(function() {
       var $this = $(this);
-      $this.click(function (event) {
+      $this.click(function(event) {
         var title = $this.attr("title");
         if (title) {
           alertMsg.confirm(title, {
-            okCall: function () {
+            okCall: function() {
               _doExport($this);
             }
           });

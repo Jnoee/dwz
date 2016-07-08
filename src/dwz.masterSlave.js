@@ -1,11 +1,11 @@
-(function ($) {
+(function($) {
   $.fn.extend({
-    masterSlave: function () {
-      return this.each(function () {
+    masterSlave: function() {
+      return this.each(function() {
         var $table = $(this).css("clear", "both"), $tbody = $table.find("tbody");
         var fields = [];
 
-        $table.find("tr:first th[type]").each(function (i) {
+        $table.find("tr:first th[type]").each(function(i) {
           var $th = $(this);
           var field = {
             type: $th.attr("type") || "text",
@@ -29,7 +29,7 @@
           fields.push(field);
         });
 
-        $tbody.find("a.red").click(function () {
+        $tbody.find("a.red").click(function() {
           var $btnDel = $(this);
 
           function delDbData() {
@@ -38,7 +38,7 @@
               dataType: "json",
               url: $btnDel.attr('href'),
               cache: false,
-              success: function () {
+              success: function() {
                 $btnDel.parents("tr:first").remove();
                 initSuffix($tbody);
               },
@@ -68,14 +68,13 @@
         }
 
         var trTm = "";
-        $addBut.click(function () {
-          if (!trTm)
-            trTm = trHtml(fields);
+        $addBut.click(function() {
+          if (!trTm) trTm = trHtml(fields);
           var rowNum = 1;
 
           for (var i = 0; i < rowNum; i++) {
             var $tr = $(trTm);
-            $tr.appendTo($tbody).initUI().find("a.red").click(function () {
+            $tr.appendTo($tbody).initUI().find("a.red").click(function() {
               $(this).parents("tr:first").remove();
               initSuffix($tbody);
             });
@@ -88,15 +87,15 @@
        * 删除时重新初始化下标
        */
       function initSuffix($tbody) {
-        $tbody.find('>tr').each(function (i) {
-          $(':input, a.btn, span:not([class*="error"])', this).each(function () {
+        $tbody.find('>tr').each(function(i) {
+          $(':input, a.btn, span:not([class*="error"])', this).each(function() {
             var $this = $(this);
-            
+
             var val = $this.val();
             if (val && val.indexOf("#index#") >= 0) {
               $this.val(val.replace('#index#', i + 1));
             }
-            
+
             if ($this.is("span")) {
               if ($this.attr("type") == "index") {
                 $this.text($this.text().replace(/^[0-9]+$/, i + 1).replace('#index#', i + 1));
@@ -104,9 +103,9 @@
                 $this.text($this.text().replace('#index#', i + 1));
               }
             }
-            
+
             $.each(this.attributes, function(index, attr) {
-              if(attr.name != 'type' && attr.name != 'value') {
+              if (attr.name != 'type' && attr.name != 'value') {
                 $this.attr(attr.name, attr.value.replaceSuffix(i));
               }
             });
@@ -119,66 +118,79 @@
 
         if (field.name.endsWith("[#index#]"))
           suffix = "[#index#]";
-        else if (field.name.endsWith("[]"))
-          suffix = "[]";
+        else if (field.name.endsWith("[]")) suffix = "[]";
 
         var suffixFrag = suffix ? ' suffix="' + suffix + '" ' : '';
 
         var attrFrag = '';
         if (field.fieldAttrs) {
           var attrs = DWZ.jsonEval(field.fieldAttrs);
-          for (var key in attrs) {
+          for ( var key in attrs) {
             attrFrag += key + '="' + attrs[key] + '"';
           }
         }
         switch (field.type) {
-          case 'del':
-            html = '<a href="javascript:;" style="font-size: 14px;" class="fa-remove red' + field.fieldClass + '" title="删除条目"></a>';
-            break;
-          case 'lookup':
-            var suggestFrag = '';
-            if (field.suggestFields) {
-              suggestFrag = 'autocomplete="off" lookupGroup="' + field.lookupGroup + '"' + suffixFrag + ' suggestUrl="' + field.suggestUrl + '" suggestFields="' + field.suggestFields + '"' + ' postField="' + field.postField + '"';
-            }
+        case 'del':
+          html = '<a href="javascript:;" style="font-size: 14px;" class="fa-remove red' + field.fieldClass
+                  + '" title="删除条目"></a>';
+          break;
+        case 'lookup':
+          var suggestFrag = '';
+          if (field.suggestFields) {
+            suggestFrag = 'autocomplete="off" lookupGroup="' + field.lookupGroup + '"' + suffixFrag + ' suggestUrl="'
+                    + field.suggestUrl + '" suggestFields="' + field.suggestFields + '"' + ' postField="'
+                    + field.postField + '"';
+          }
 
-            html = '<input type="hidden" name="' + field.lookupGroup + '.' + field.lookupPk + suffix + '"/>' + '<input type="text" name="' + field.name + '"' + suggestFrag + ' lookupPk="' + field.lookupPk + '" size="' + field.size + '" class="' + field.fieldClass + '" ' + attrFrag + '/>'
-              + '<a class="btn fa-search-plus" href="' + field.lookupUrl + '" lookupGroup="' + field.lookupGroup + '" ' + suggestFrag + ' lookupPk="' + field.lookupPk + '" title="查找带回">查找带回</a>';
-            break;
-          case 'attach':
-            html = '<input type="hidden" name="' + field.lookupGroup + '.' + field.lookupPk + suffix + '"/>' + '<input type="text" name="' + field.name + '" size="' + field.size + '" readonly="readonly" class="' + field.fieldClass + '" ' + attrFrag + '/>' + '<a class="btn fa-cloud-upload" href="'
-              + field.lookupUrl + '" lookupGroup="' + field.lookupGroup + '" ' + suffixFrag + ' lookupPk="' + field.lookupPk + '" width="SS" height="S" title="上传文件">上传文件</a>';
-            break;
-          case 'enum':
-            $.ajax({
-              type: "POST",
-              dataType: "html",
-              async: false,
-              url: field.enumUrl,
-              data: {
-                inputName: field.name
-              },
-              success: function (response) {
-                html = response;
-              }
-            });
-            break;
-          case 'date':
-            html = '<input type="text" name="' + field.name + '" value="' + field.defaultVal + '" class="date ' + field.fieldClass + '" dateFmt="' + field.patternDate + '" size="' + field.size + '" ' + attrFrag + '/>';
-            break;
-          // 增加checkbox支持
-          case 'checkbox':
-            html = '<input type="checkbox" name="' + field.name + '" value="' + field.defaultVal + '" size="' + field.size + '" class="' + field.fieldClass + '" ' + attrFrag + '/>';
-            break;
-          // 增加span文本支持
-          case 'span':
-            html = '<span class="' + field.fieldClass + '">' + field.defaultVal + '</span>';
-            break;
-          case 'index':
-            html = '<span type="index">#index#</span>';
-            break;
-          default:
-            html = '<input type="' + field.type + '" name="' + field.name + '" value="' + field.defaultVal + '" size="' + field.size + '" class="' + field.fieldClass + '" ' + attrFrag + '/>';
-            break;
+          html = '<input type="hidden" name="' + field.lookupGroup + '.' + field.lookupPk + suffix + '"/>'
+                  + '<input type="text" name="' + field.name + '"' + suggestFrag + ' lookupPk="' + field.lookupPk
+                  + '" size="' + field.size + '" class="' + field.fieldClass + '" ' + attrFrag + '/>'
+                  + '<a class="btn fa-search-plus" href="' + field.lookupUrl + '" lookupGroup="' + field.lookupGroup
+                  + '" ' + suggestFrag + ' lookupPk="' + field.lookupPk + '" title="查找带回">查找带回</a>';
+          break;
+        case 'attach':
+          html = '<input type="hidden" name="' + field.lookupGroup + '.' + field.lookupPk + suffix + '"/>'
+                  + '<input type="text" name="' + field.name + '" size="' + field.size
+                  + '" readonly="readonly" class="' + field.fieldClass + '" ' + attrFrag + '/>'
+                  + '<a class="btn fa-cloud-upload" href="' + field.lookupUrl + '" lookupGroup="' + field.lookupGroup
+                  + '" ' + suffixFrag + ' lookupPk="' + field.lookupPk
+                  + '" width="SS" height="S" title="上传文件">上传文件</a>';
+          break;
+        case 'enum':
+          $.ajax({
+            type: "POST",
+            dataType: "html",
+            async: false,
+            url: field.enumUrl,
+            data: {
+              inputName: field.name
+            },
+            success: function(response) {
+              html = response;
+            }
+          });
+          break;
+        case 'date':
+          html = '<input type="text" name="' + field.name + '" value="' + field.defaultVal + '" class="date '
+                  + field.fieldClass + '" dateFmt="' + field.patternDate + '" size="' + field.size + '" ' + attrFrag
+                  + '/>';
+          break;
+        // 增加checkbox支持
+        case 'checkbox':
+          html = '<input type="checkbox" name="' + field.name + '" value="' + field.defaultVal + '" size="'
+                  + field.size + '" class="' + field.fieldClass + '" ' + attrFrag + '/>';
+          break;
+        // 增加span文本支持
+        case 'span':
+          html = '<span class="' + field.fieldClass + '">' + field.defaultVal + '</span>';
+          break;
+        case 'index':
+          html = '<span type="index">#index#</span>';
+          break;
+        default:
+          html = '<input type="' + field.type + '" name="' + field.name + '" value="' + field.defaultVal + '" size="'
+                  + field.size + '" class="' + field.fieldClass + '" ' + attrFrag + '/>';
+          break;
         }
         if (field.hiddenName) {
           html += '<input type="hidden" name="' + field.hiddenName + '" value="' + field.hiddenVal + '" />';
@@ -188,7 +200,7 @@
 
       function trHtml(fields) {
         var html = '';
-        $(fields).each(function () {
+        $(fields).each(function() {
           html += tdHtml(this);
         });
         return '<tr class="unitBox">' + html + '</tr>';
