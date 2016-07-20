@@ -1292,9 +1292,6 @@ var DWZ = {
           if (element.is("input:checkbox") && element.parent().is("label.unit")) {
             element.parent().parent().append(error);
           } else {
-            if (element.parent().hasClass("uploadifive-button")) {
-              error.css("float", "right");
-            }
             element.parent().append(error);
           }
         }
