@@ -1,0 +1,59 @@
+<meta charset="UTF-8" />
+<div class="pageContent">
+	<h2 class="contentTitle">
+		<a href="http://fex.baidu.com/webuploader" target="_blank">webuploader</a> 文件上传
+		<a href="external/webuploader.html" class="fa-file-text viewsource"
+			title="查看源文件"></a>
+	</h2>
+	<form action="result/navtab-reload.json" class="validateForm">
+		<div class="pageFormContent" layoutH="87">
+			<dl style="height: auto">
+				<dt>单张图片：</dt>
+				<dd>
+					<div webuploaderImg="{fileNumLimit:1}">
+						<div>
+							<div class="webuploader-file-item thumbnail">
+								<img width="100" height="100" src="data/sample.png">
+								<div class="webuploader-file-info">已上传</div>
+								<div class="webuploader-file-bar">
+									<i class="fa fa-trash close" title="删除"></i>
+								</div>
+								<input type="hidden" name="pic" value="id001" />
+							</div>
+						</div>
+					</div>
+				</dd>
+			</dl>
+			<dl class="nowrap" style="height: auto">
+				<dt>多张图片：</dt>
+				<dd>
+					<div webuploaderImg="{}">
+						<div>
+							<div class="webuploader-file-item thumbnail">
+								<img width="100" height="100" src="data/sample.png">
+								<div class="webuploader-file-info">已上传</div>
+								<div class="webuploader-file-bar">
+									<i class="fa fa-trash close" title="删除"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</dd>
+			</dl>
+		</div>
+		<div class="formBar">
+			<ul>
+				<li><div class="buttonActive">
+						<div class="buttonContent">
+							<button type="submit">提交</button>
+						</div>
+					</div></li>
+				<li><div class="button">
+						<div class="buttonContent">
+							<button type="button" class="close">取消</button>
+						</div>
+					</div></li>
+			</ul>
+		</div>
+	</form>
+</div>

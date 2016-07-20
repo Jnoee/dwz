@@ -124,8 +124,8 @@ function initUI(_box) {
     $this.uploadify(options);
   });
 
-  $(":file[uploadifiveImg]", $p).each(function() {
-    $(this).uploadifiveImg();
+  $("div[webuploaderImg]", $p).each(function() {
+    $(this).webuploaderImg();
   });
 
   $("input[type=text], input[type=password], textarea", $p).addClass("textInput").focusClass("focus");

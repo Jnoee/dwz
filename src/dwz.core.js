@@ -599,6 +599,11 @@ var DWZ = {
         });
       }
       return json;
+    },
+    uniqueId: function() {
+      var id = 'ui_id_' + uuid().replaceAll('-', '_');
+      $(this).attr('id', id);
+      return id;
     }
   });
 })(jQuery);
