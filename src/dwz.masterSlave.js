@@ -67,8 +67,14 @@
           $addBut.css("display", "none");
         }
 
-        var trTm = "";
+        var trTm = '';
         $addBut.click(function() {
+          var maxRows = $table.attr('maxRows');
+          if(maxRows && $tbody.children('tr').size() >= maxRows) {
+            alertMsg.error('子项最多允许' + maxRows + '项。');
+            return;
+          }
+          var trCount = $tbody.children().size();
           if (!trTm) trTm = trHtml(fields);
           var rowNum = 1;
 
