@@ -15,9 +15,9 @@
 
     var getTarget = function(element, param) {
       var form = $(element).closest("form");
-      var target = form.find("[name=" + param + "]");
+      var target = form.find("[name=" + param.escape() + "]");
       if (target.length == 0) {
-        target = $(param, form);
+        target = $(param.escape(), form);
       }
       return target;
     };
